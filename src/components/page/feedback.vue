@@ -29,11 +29,11 @@
         <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
     </el-col>
-
+   <!-- action="http://localhost:3010/test/uploadPic"     -->
     <el-col :span="24" class="warp-main" style="margin-top:30px">
         <el-upload
             ref="upload2"
-            action="http://localhost:3010/test/uploadPic"    
+            action="http://172.20.133.47:3010/test/uploadPic"    
             list-type="picture-card"
             :http-request="submitUpload2"
             :auto-upload="false"
