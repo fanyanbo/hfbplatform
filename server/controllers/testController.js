@@ -58,7 +58,7 @@ exports.uploadIssue = function (req, res, next) {
         console.log(newPath);
         fs.renameSync(files.file.path, newPath); 
         // res.send({data:"/upload/"+avatarName})
-        picName = "http://localhost:3010/upload/" + avatarName;
+        picName = "http://172.20.133.47:3010/upload/" + avatarName;
 
         testModel.addIssues(chip,model,picName,issueType,issueContent,contact, function(err,result) {
             if(err) {
