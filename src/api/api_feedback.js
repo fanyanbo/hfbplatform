@@ -59,19 +59,19 @@ export default {
   },
 
   uploadFile: params => {
-    return API.POST('/test/uploadPic', params)
+    return API.POST('/help/uploadPic', params)
   },
 
   uploadInfo: params => {
-    return API.POST('/test/uploadInfo', params)
+    return API.POST('/help/uploadInfo', params)
   },
 
   submitIssue: params => {
-    return API.POST('/test/uploadIssue', params)
+    return API.POST('/help/uploadIssue', params)
   },
 
   getIssue: params => {
-    return API.POST('/test/queryIssue', params)
+    return API.POST('/help/queryIssue', params)
   },
 
   submitCase: params => {

@@ -14,7 +14,7 @@ var config = require('./config/config');
 
 var signRouter = require('./routes/sign_router');
 var apiRouterV1 = require('./routes/api_router_v1');
-var testRouter = require('./routes/test_router');
+var helpRouter = require('./routes/help_router');
 // var users = require('./routes/users');
 
 var app = express();
@@ -49,14 +49,15 @@ app.use(express.static(staticDir));
 //   next();
 // });
 app.use(cors({
-    origin:['http://localhost:8080'],
+    // origin:['http://localhost:8080'],
+    origin:['http://172.20.133.47:8080'],
     methods:['GET','POST'],
     alloweHeaders:['Conten-Type','Authorization','Content-Length', 'Accept,X-Requested-With'],
     credentials:true
 }));
 
 // app.use('/', index);
-app.use('/help', testRouter);
+app.use('/help', helpRouter);
 app.use('/', signRouter);
 app.use('/v1', apiRouterV1);
 
