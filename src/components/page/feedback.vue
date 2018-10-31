@@ -12,7 +12,7 @@
         <el-upload
         class="upload-demo"
         ref="upload"
-        action="" 
+        action="http://localhost:3010/help/uploadInfo" 
         :on-change="handleChanged"
         :before-upload="beforeUpload"
         :on-preview="handlePreview"
