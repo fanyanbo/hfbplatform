@@ -9,9 +9,10 @@ import UserChangePwd from '@/components/user/changepwd'
 import UserProfile from '@/components/user/profile'
 import About from '@/components/user/about'
 
-// 添加测试页面
 import Feedback from '@/components/page/feedback'
 import Help from '@/components/page/help'
+import FeedbackQ from '@/components/page/feedbackq'
+import HelpQ from '@/components/page/helpq'
 
 // 懒加载方式，当路由被访问的时候才加载对应组件
 const Login = resolve => require(['@/components/Login'], resolve)
@@ -45,12 +46,14 @@ export default new Router({
     {
       path: '/',
       component: Home,
-      name: '数据',
+      name: '帮助反馈',
       menuShow: true,
       iconCls: 'iconfont icon-users',
       children: [
-        {path: '/feekback', component: Feedback, name: '用户反馈', menuShow: true, iconCls: 'iconfont icon-books2'},
-        {path: '/help', component: Help, name: '用户帮助', menuShow: true, iconCls: 'iconfont icon-users'}
+        {path: '/feekback', component: Feedback, name: '反馈管理', menuShow: true, iconCls: 'iconfont icon-books2'},
+        {path: '/help', component: Help, name: '帮助管理', menuShow: true, iconCls: 'iconfont icon-users'}, 
+        {path: '/feekbackq', component: FeedbackQ, name: '反馈查询', menuShow: true, iconCls: 'iconfont icon-books2'},
+        {path: '/helpq', component: HelpQ, name: '帮助查询', menuShow: true, iconCls: 'iconfont icon-users'}
       ]
     },
     {

@@ -33,7 +33,8 @@ axios.interceptors.response.use(function (response) {
 });
 
 //基地址
-let base = 'http://172.20.133.47:3010';  //接口代理地址参见：config/index.js中的proxyTable配置
+// let base = 'http://172.20.133.47:3010';  //接口代理地址参见：config/index.js中的proxyTable配置
+let base = 'http://localhost:3010';  //接口代理地址参见：config/index.js中的proxyTable配置
 
 //通用方法
 export const POST = (url, params) => {

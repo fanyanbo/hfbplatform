@@ -1,22 +1,13 @@
 var validator = require('validator');
 var output = require('../common/output');
 var logger = require('../common/logger');
-var testModel = require('../models/testModel');
+var helpModel = require('../models/helpModel');
 var fs = require('fs');
 var path= require("path");
 var formidable = require('formidable');
 
 
 exports.uploadIssue = function (req, res, next) {
-
-  // let chip = validator.trim(req.body.chip);
-  // let model = validator.trim(req.body.model);
-  // let pannelSize = validator.trim(req.body.pannelSize);
-  // let issueType = validator.trim(req.body.issueType);
-  // let issueContent = validator.trim(req.body.issueContent);
-  // let contact = validator.trim(req.body.contact);
-  // let picList = validator.trim(req.body.picList);
-
 
   // if (!chip || !model) {
   //   return res.json({"errcode": 40002, "errmsg": "不合法的参数"});
@@ -58,9 +49,10 @@ exports.uploadIssue = function (req, res, next) {
         console.log(newPath);
         fs.renameSync(files.file.path, newPath); 
         // res.send({data:"/upload/"+avatarName})
-        picName = "http://172.20.133.47:3010/upload/" + avatarName;
+        // picName = "http://172.20.133.47:3010/upload/" + avatarName;
+        picName = "http://localhost:3010/upload/" + avatarName;
 
-        testModel.addIssues(chip,model,picName,issueType,issueContent,contact, function(err,result) {
+        helpModel.addIssues(chip,model,picName,issueType,issueContent,contact, function(err,result) {
             if(err) {
               return output.error(req,res,err);
             } else {
@@ -79,7 +71,7 @@ exports.uploadIssue = function (req, res, next) {
 
 exports.queryIssue = function (req, res, next) {
 
-  testModel.queryIssues(function(err, result) {
+    helpModel.queryIssues(function(err, result) {
      if(err){
        return res.json({"errcode": 40005, "errmsg": err});
      }
@@ -87,3 +79,34 @@ exports.queryIssue = function (req, res, next) {
      return res.json({"errcode": 0, "total": result.length, "data": result});
    });
 };
+
+exports.queryCase = function (req, res, next) {
+
+    helpModel.queryCase(function(err, result) {
+       if(err){
+         return res.json({"errcode": 40005, "errmsg": err});
+       }
+       console.log('====>' + JSON.stringify(result));
+       return res.json({"errcode": 0, "total": result.length, "data": result});
+     });
+  };
+
+  exports.addCase = function (req, res, next) {
+
+    console.log('11111 = ' + JSON.stringify(req.body));
+    let chip = validator.trim(req.body.chip);
+    let model = validator.trim(req.body.model);
+    let title = validator.trim(req.body.title);
+    let content = validator.trim(req.body.content);
+    let category = validator.trim(req.body.category);
+
+    helpModel.addCase(chip,model,title,content,category,function(err, result) {
+        if(err) {
+            return output.error(req,res,err);
+        } else {
+            console.log(JSON.stringify(result));
+            return res.json({"errcode": 00000, "errmsg": "提交成功"});
+        }
+     });
+  };
+

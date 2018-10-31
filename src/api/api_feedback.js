@@ -74,8 +74,13 @@ export default {
     return API.POST('/help/queryIssue', params)
   },
 
-  submitCase: params => {
-    return API.POST('/test/addCase', params);
+  getCase: params => {
+    return API.POST('/help/getCase', params);
+  },
+
+  addCase: params => {
+    console.log('aaa = ' + JSON.stringify(params));
+    return API.POST('/help/addCase', params);
   }
 
 }
