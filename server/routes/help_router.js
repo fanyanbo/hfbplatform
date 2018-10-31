@@ -27,4 +27,7 @@ router.post('/queryIssue', helpController.queryIssue);
 router.post('/getCase', helpController.queryCase);
 router.post('/addCase', helpController.addCase);
 
+router.post('/queryDiscovery',helpController.queryDiscovery);
+router.post('/updateDiscovery',helpController.updateDiscovery);
+
 module.exports = router;

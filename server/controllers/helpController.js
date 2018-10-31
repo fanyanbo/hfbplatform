@@ -110,3 +110,30 @@ exports.queryCase = function (req, res, next) {
      });
   };
 
+  exports.queryDiscovery = function (req, res, next) {
+
+    helpModel.queryDiscovery(function(err, result) {
+       if(err){
+         return res.json({"errcode": 40005, "errmsg": err});
+       }
+       console.log('====>' + JSON.stringify(result));
+       return res.json({"errcode": 0, "total": result.length, "data": result});
+     });
+  };
+
+  exports.updateDiscovery = function (req, res, next) {
+
+    let categoryId = validator.trim(req.body.categoryId);
+    let titleId = validator.trim(req.body.titleId);
+    let flag = validator.trim(req.body.flag);
+
+    helpModel.updateDiscovery(categoryId,titleId,flag,function(err, result) {
+       if(err){
+         return res.json({"errcode": 40005, "errmsg": err});
+       }
+       console.log('====>' + JSON.stringify(result));
+       return res.json({"errcode": 00000, "errmsg": "提交成功"});
+     });
+  };
+
+

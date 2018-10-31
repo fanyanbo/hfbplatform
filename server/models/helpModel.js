@@ -52,6 +52,28 @@ helpModel.prototype.queryCase = function(callback) {
   });
 }
 
+helpModel.prototype.queryDiscovery = function(callback) {
+ 
+  let sql = "SELECT * FROM discovery";
+  db.conn.query(sql,[],function(err,result) {
+      if(err) {
+        return callback(err);
+      }
+      callback(null,result);
+  });
+}
+
+helpModel.prototype.updateDiscovery = function(callback) {
+ 
+  let sql = "SELECT * FROM test";
+  db.conn.query(sql,[],function(err,result) {
+      if(err) {
+        return callback(err);
+      }
+      callback(null,result);
+  });
+}
+
 
 var helpModel = new helpModel();
 
