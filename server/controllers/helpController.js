@@ -123,9 +123,9 @@ exports.queryCase = function (req, res, next) {
 
   exports.updateDiscovery = function (req, res, next) {
 
-    let categoryId = validator.trim(req.body.categoryId);
-    let titleId = validator.trim(req.body.titleId);
-    let flag = validator.trim(req.body.flag);
+    let categoryId = req.body.categoryId;
+    let titleId = req.body.titleId;
+    let flag = req.body.flag;
 
     helpModel.updateDiscovery(categoryId,titleId,flag,function(err, result) {
        if(err){

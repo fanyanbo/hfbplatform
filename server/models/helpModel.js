@@ -63,10 +63,17 @@ helpModel.prototype.queryDiscovery = function(callback) {
   });
 }
 
-helpModel.prototype.updateDiscovery = function(callback) {
+helpModel.prototype.updateDiscovery = function(categoryId,titleId,flag,callback) {
  
-  let sql = "SELECT * FROM test";
-  db.conn.query(sql,[],function(err,result) {
+  console.log(categoryId + ' ' + titleId + ' ' + flag);
+  let sql;
+  if(flag === 0) {
+    sql = "UPDATE discovery SET dislikeCount=dislikeCount+1 WHERE category_id = ? AND title_id = ?";
+  } else {
+    sql = "UPDATE discovery SET likeCount=likeCount+1 WHERE category_id = ? AND title_id = ?";
+  }
+  let sql_params = [categoryId,titleId];
+  db.conn.query(sql,sql_params,function(err,result) {
       if(err) {
         return callback(err);
       }
