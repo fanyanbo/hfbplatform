@@ -134,6 +134,44 @@ exports.queryCase = function (req, res, next) {
      });
   };
 
+  exports.addIssue = function (req, res, next) {
+
+    let chip = req.body.chip;
+    let model = req.body.model;
+    let mac = req.body.mac;
+    let activeid = req.body.activeid;
+    let category = req.body.category;
+    let title = req.body.title;
+    let likeCount =  req.body.likeCount;
+    let dislikeCount =  req.body.dislikeCount;
+
+    helpModel.addIssue(chip,model,mac,activeid,category,title,likeCount,dislikeCount,function(err, result) {
+       if(err){
+         return res.json({"errcode": 40005, "errmsg": err});
+       }
+       console.log('====>' + JSON.stringify(result));
+       return res.json({"errcode": 00000, "errmsg": "提交成功"});
+     });
+  };
+
+  
+  exports.updateIssue = function (req, res, next) {
+
+    let chip = req.body.chip;
+    let model = req.body.model;
+    let mac = req.body.mac;
+    let likeCount =  req.body.likeCount;
+    let dislikeCount =  req.body.dislikeCount;
+
+    helpModel.updateIssue(chip,model,mac,likeCount,dislikeCount,function(err, result) {
+       if(err){
+         return res.json({"errcode": 40005, "errmsg": err});
+       }
+       console.log('====>' + JSON.stringify(result));
+       return res.json({"errcode": 00000, "errmsg": "提交成功"});
+     });
+  };
+
   
   exports.addFeedback = function (req, res, next) {
 
@@ -144,9 +182,10 @@ exports.queryCase = function (req, res, next) {
     let activeid = validator.trim(req.body.activeid);
     let category = validator.trim(req.body.category);
     let title = validator.trim(req.body.title);
+    let content = validator.trim(req.body.content);
     let contact = validator.trim(req.body.contact);
     
-    helpModel.addFeedback(chip,model,mac,activeid,category,title,contact,function(err, result) {
+    helpModel.addFeedback(chip,model,mac,activeid,category,title,content,contact,function(err, result) {
         if(err) {
             return output.error(req,res,err);
         } else {
@@ -159,7 +198,7 @@ exports.queryCase = function (req, res, next) {
   exports.addFeedbackExtra = function (req, res, next) {
 
     let _chip,_model,_mac,_activeid,_category,_title,_content,_contact,_picurl;
-    console.log('======>addFeedbackExtra = ' + JSON.stringify(req.body));
+    console.log('addFeedbackExtra = ' + JSON.stringify(req.body));
     var form = new formidable.IncomingForm();
     form.encoding = 'utf-8';
     form.uploadDir = path.join(__dirname + "/../public/upload");

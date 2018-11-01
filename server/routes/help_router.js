@@ -32,5 +32,7 @@ router.post('/updateDiscovery',helpController.updateDiscovery);
 router.post('/addFeedback',helpController.addFeedback);
 router.post('/addFeedbackExtra',helpController.addFeedbackExtra);
 router.post('/queryFeedback',helpController.queryFeedback);
+router.post('/addIssue',helpController.addIssue);
+router.post('/updateIssue',helpController.updateIssue);
 
 module.exports = router;

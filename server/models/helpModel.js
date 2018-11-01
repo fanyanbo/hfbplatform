@@ -14,11 +14,36 @@ helpModel.prototype.addIssues = function (chip, model, picList, issueType, issue
   });
 }
 
-
 helpModel.prototype.queryIssues = function(callback) {
  
   let sql = "SELECT * FROM issues";
   db.conn.query(sql,[],function(err,result) {
+      if(err) {
+        return callback(err);
+      }
+      callback(null,result);
+  });
+}
+
+helpModel.prototype.addIssue = function (chip, model, mac, activeid, category, title, likeCount, dislikeCount, callback) {
+  let sql = "INSERT INTO issue(chip, model, mac, activeid, category, title, likeCount, dislikeCount) values(?,?,?,?,?,?,?,?)";
+  let sql_params = [chip, model, mac, activeid, category, title, likeCount, dislikeCount];
+  console.log(sql_params);
+  db.conn.query(sql,sql_params,function(err,rows,fields){
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
+  });
+}
+
+helpModel.prototype.updateIssue = function(chip, model, mac, likeCount, dislikeCount,callback) {
+ 
+  console.log(chip + ' ' + model + ' ' + mac + ' ' + likeCount + ' ' + dislikeCount);
+  let sql = "UPDATE issue SET dislikeCount=?,likeCount = ?  WHERE chip = ? AND model = ? AND mac = ?";
+  console.log(sql);
+  let sql_params = [dislikeCount,likeCount,chip,model,mac];
+  db.conn.query(sql,sql_params,function(err,result) {
       if(err) {
         return callback(err);
       }
@@ -90,9 +115,10 @@ helpModel.prototype.updateDiscovery = function(categoryId,titleId,likeFlag,count
   });
 }
 
-helpModel.prototype.addFeedback = function (chip, model, mac, activeid, category, title, contact, callback) {
-  let sql = "INSERT INTO feedback(chip, model, mac, activeid, category, title, contact) values (?,?,?,?,?,?,?)";
-  let sql_params = [chip, model, mac, activeid, category, title, contact];
+helpModel.prototype.addFeedback = function (chip, model, mac, activeid, category, title, content, contact, callback) {
+  console.log('enter addFeedback');
+  let sql = "INSERT INTO feedback(chip, model, mac, activeid, category, title, content, contact) values (?,?,?,?,?,?,?,?)";
+  let sql_params = [chip, model, mac, activeid, category, title, content, contact];
   console.log(sql_params);
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {

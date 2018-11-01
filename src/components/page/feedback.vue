@@ -29,23 +29,6 @@
         <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
     </el-col>
-   <!-- action="http://localhost:3010/test/uploadPic"     -->
-    <el-col :span="24" class="warp-main" style="margin-top:30px">
-        <el-upload
-            ref="upload2"
-            action="http://172.20.133.47:3010/test/uploadPic"    
-            list-type="picture-card"
-            :http-request="submitUpload2"
-            :auto-upload="false"
-            :on-progress="handleProgress"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove">
-            <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt="">
-        </el-dialog>
-    </el-col>
   </el-row>
 </template>
 
@@ -56,7 +39,8 @@
     data() {
       return {
         dialogImageUrl: '',
-        dialogVisible: false
+        dialogVisible: false,
+        count: 0
       }
     },
     methods: {
@@ -67,27 +51,8 @@
         },
         submitUpload() {
             console.log('submitUpload');
+            console.log('count = ' + this.count);
             this.$refs.upload.submit();
-        },
-        submitUpload2(param) {
-            console.log('submitUpload2');
-            let fd = new FormData();
-            fd.append('file', param.file);
-            fd.append('chip', '9S52');
-            fd.append('model', 'Q4A');
-            fd.append('issueType','a');
-            fd.append('issueContent','b');
-            fd.append('contact','1382345930');
-            API.submitIssue(fd).then(
-                function (result) {
-                    console.log(result);
-                }, 
-                function (err) {
-                    console.log(err);
-                }
-            ).catch(function (error) {
-                console.log(eroor);
-            });
         },
         beforeUpload(param) {
             console.log('beforeUpload');
@@ -128,6 +93,7 @@
         handleChanged(file, fileList) {
             console.log('handleChanged file = ' + JSON.stringify(file));
             console.log('handleChanged fileList = ' + JSON.stringify(fileList));
+            this.count = fileList.length;
         }
     }
   }
