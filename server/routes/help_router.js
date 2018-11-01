@@ -29,5 +29,8 @@ router.post('/addCase', helpController.addCase);
 
 router.post('/queryDiscovery',helpController.queryDiscovery);
 router.post('/updateDiscovery',helpController.updateDiscovery);
+router.post('/addFeedback',helpController.addFeedback);
+router.post('/addFeedbackExtra',helpController.addFeedbackExtra);
+router.post('/queryFeedback',helpController.queryFeedback);
 
 module.exports = router;

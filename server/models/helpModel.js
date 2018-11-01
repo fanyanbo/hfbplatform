@@ -63,14 +63,22 @@ helpModel.prototype.queryDiscovery = function(callback) {
   });
 }
 
-helpModel.prototype.updateDiscovery = function(categoryId,titleId,flag,callback) {
+helpModel.prototype.updateDiscovery = function(categoryId,titleId,likeFlag,countflag,callback) {
  
-  console.log(categoryId + ' ' + titleId + ' ' + flag);
+  console.log(categoryId + ' ' + titleId + ' ' + likeFlag + ' ' + countflag);
   let sql;
-  if(flag === 0) {
-    sql = "UPDATE discovery SET dislikeCount=dislikeCount+1 WHERE category_id = ? AND title_id = ?";
-  } else {
-    sql = "UPDATE discovery SET likeCount=likeCount+1 WHERE category_id = ? AND title_id = ?";
+  if(likeFlag === 0) { //表示点踩
+    if(countflag == 0) { //表示撤销点踩
+      sql = "UPDATE discovery SET dislikeCount=dislikeCount-1 WHERE category_id = ? AND title_id = ?";
+    }else {
+      sql = "UPDATE discovery SET dislikeCount=dislikeCount+1 WHERE category_id = ? AND title_id = ?";
+    } 
+  } else { //表示点赞
+    if(countflag == 0) { //表示撤销点赞
+      sql = "UPDATE discovery SET likeCount=likeCount-1 WHERE category_id = ? AND title_id = ?";
+    }else {
+      sql = "UPDATE discovery SET likeCount=likeCount+1 WHERE category_id = ? AND title_id = ?";
+    } 
   }
   let sql_params = [categoryId,titleId];
   db.conn.query(sql,sql_params,function(err,result) {
@@ -78,6 +86,34 @@ helpModel.prototype.updateDiscovery = function(categoryId,titleId,flag,callback)
         return callback(err);
       }
       callback(null,result);
+  });
+}
+
+helpModel.prototype.addFeedback = function (chip, model, mac, activeid, category, title, contact, callback) {
+  let sql = "INSERT INTO feedback(chip, model, mac, activeid, category, title, contact) values (?,?,?,?,?,?,?)";
+  let sql_params = [chip, model, mac, activeid, category, title, contact];
+  // let sql = "INSERT INTO test(chip, model) values (?,?)";
+  // let sql_params = [chip,model];
+  console.log(sql_params);
+  db.conn.query(sql,sql_params,function(err,rows,fields){
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
+  });
+}
+
+helpModel.prototype.addFeedbackExtra = function (chip, model, mac, activeid, category, title, content, contact, picurl, callback) {
+  let sql = "INSERT INTO feedback(chip, model, mac, activeid, category, title, content, contact, picurl) values (?,?,?,?,?,?,?,?,?)";
+  let sql_params = [chip, model, mac, activeid, category, title, content, contact, picurl];
+  // let sql = "INSERT INTO test(chip, model) values (?,?)";
+  // let sql_params = [chip,model];
+  console.log(sql_params);
+  db.conn.query(sql,sql_params,function(err,rows,fields){
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
   });
 }
 

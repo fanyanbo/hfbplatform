@@ -9,9 +9,6 @@ var formidable = require('formidable');
 
 exports.uploadIssue = function (req, res, next) {
 
-  // if (!chip || !model) {
-  //   return res.json({"errcode": 40002, "errmsg": "不合法的参数"});
-  // }
     let chip, model, issueType, issueContent, contact, picName;
     console.log('======>testController upload picture req = ' + JSON.stringify(req.body));
     var form = new formidable.IncomingForm();
@@ -125,9 +122,10 @@ exports.queryCase = function (req, res, next) {
 
     let categoryId = req.body.categoryId;
     let titleId = req.body.titleId;
-    let flag = req.body.flag;
+    let likeFlag = req.body.likeFlag;
+    let countFlag = req.body.countFlag;
 
-    helpModel.updateDiscovery(categoryId,titleId,flag,function(err, result) {
+    helpModel.updateDiscovery(categoryId,titleId,likeFlag,countFlag,function(err, result) {
        if(err){
          return res.json({"errcode": 40005, "errmsg": err});
        }
@@ -135,5 +133,70 @@ exports.queryCase = function (req, res, next) {
        return res.json({"errcode": 00000, "errmsg": "提交成功"});
      });
   };
+
+  
+  exports.addFeedback = function (req, res, next) {
+
+    console.log('addFeedback = ' + JSON.stringify(req.body));
+    let chip = validator.trim(req.body.chip);
+    let model = validator.trim(req.body.model);
+    let mac = validator.trim(req.body.mac);
+    let activeid = validator.trim(req.body.activeid);
+    let category = validator.trim(req.body.category);
+    let title = validator.trim(req.body.title);
+    let contact = validator.trim(req.body.contact);
+    
+    helpModel.addFeedback(chip,model,mac,activeid,category,title,contact,function(err, result) {
+        if(err) {
+            return output.error(req,res,err);
+        } else {
+            console.log(JSON.stringify(result));
+            return res.json({"errcode": 00000, "errmsg": "提交成功"});
+        }
+     });
+  };
+
+  exports.addFeedbackExtra = function (req, res, next) {
+
+    // console.log('addFeedbackExtra = ' + JSON.stringify(req.body));
+    // let chip = validator.trim(req.body.chip);
+    // let model = validator.trim(req.body.model);
+    // let mac = validator.trim(req.body.mac);
+    // let activeid = validator.trim(req.body.activeid);
+    // let title = validator.trim(req.body.title);
+    // let content = validator.trim(req.body.content);
+    // let category = validator.trim(req.body.category);
+
+    // helpModel.addFeedbackExtra(chip,model,title,content,category,function(err, result) {
+    //     if(err) {
+    //         return output.error(req,res,err);
+    //     } else {
+    //         console.log(JSON.stringify(result));
+    //         return res.json({"errcode": 00000, "errmsg": "提交成功"});
+    //     }
+    //  });
+  };
+
+  exports.queryFeedback = function (req, res, next) {
+
+    // console.log('addFeedbackExtra = ' + JSON.stringify(req.body));
+    // let chip = validator.trim(req.body.chip);
+    // let model = validator.trim(req.body.model);
+    // let mac = validator.trim(req.body.mac);
+    // let activeid = validator.trim(req.body.activeid);
+    // let title = validator.trim(req.body.title);
+    // let content = validator.trim(req.body.content);
+    // let category = validator.trim(req.body.category);
+
+    // helpModel.addFeedbackExtra(chip,model,title,content,category,function(err, result) {
+    //     if(err) {
+    //         return output.error(req,res,err);
+    //     } else {
+    //         console.log(JSON.stringify(result));
+    //         return res.json({"errcode": 00000, "errmsg": "提交成功"});
+    //     }
+    //  });
+  };
+
 
 
