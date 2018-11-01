@@ -90,7 +90,7 @@ exports.queryCase = function (req, res, next) {
 
   exports.addCase = function (req, res, next) {
 
-    console.log('11111 = ' + JSON.stringify(req.body));
+    console.log('addCase = ' + JSON.stringify(req.body));
     let chip = validator.trim(req.body.chip);
     let model = validator.trim(req.body.model);
     let title = validator.trim(req.body.title);
@@ -158,44 +158,71 @@ exports.queryCase = function (req, res, next) {
 
   exports.addFeedbackExtra = function (req, res, next) {
 
-    // console.log('addFeedbackExtra = ' + JSON.stringify(req.body));
-    // let chip = validator.trim(req.body.chip);
-    // let model = validator.trim(req.body.model);
-    // let mac = validator.trim(req.body.mac);
-    // let activeid = validator.trim(req.body.activeid);
-    // let title = validator.trim(req.body.title);
-    // let content = validator.trim(req.body.content);
-    // let category = validator.trim(req.body.category);
+    let _chip,_model,_mac,_activeid,_category,_title,_content,_contact,_picurl;
+    console.log('======>addFeedbackExtra = ' + JSON.stringify(req.body));
+    var form = new formidable.IncomingForm();
+    form.encoding = 'utf-8';
+    form.uploadDir = path.join(__dirname + "/../public/upload");
+    form.keepExtensions = true;
+    form.maxFieldsSize = 5 * 1024 * 1024;
+    form.parse(req, function (err, fields, files){
+        
+        console.log(fields);
+        _chip = fields.chip;
+        _model = fields.model;
+        _mac = fields.mac;
+        _activeid = fields.activeid;
+        _category = fields.category;
+        _title = fields.title;
+        _content = fields.content;
+        _contact = fields.contact;
 
-    // helpModel.addFeedbackExtra(chip,model,title,content,category,function(err, result) {
-    //     if(err) {
-    //         return output.error(req,res,err);
-    //     } else {
-    //         console.log(JSON.stringify(result));
-    //         return res.json({"errcode": 00000, "errmsg": "提交成功"});
-    //     }
-    //  });
+        if (err) {
+            console.log('error ' + err);
+            return res.json({"errcode": 40002, "errmsg": "解析发生错误"});
+        }
+        var filename = files.file.name
+        var nameArray = filename.split('.');
+        var type = nameArray[nameArray.length - 1];
+        var name = '';
+        for (var i = 0; i < nameArray.length - 1; i++) {
+            name = name + nameArray[i];
+        }
+        var date = new Date();
+        var time = '_' + date.getFullYear() + "_" + date.getMonth() + "_" + date.getDay() + "_" + date.getHours() + "_" + date.getMinutes();
+        var avatarName = name + time + '.' + type;
+        console.log(avatarName);
+        var newPath = form.uploadDir + "/" + avatarName;
+        console.log(newPath);
+        fs.renameSync(files.file.path, newPath); 
+        // picName = "http://172.20.133.47:3010/upload/" + avatarName;
+        _picurl = "http://localhost:3010/upload/" + avatarName;
+
+        helpModel.addFeedbackExtra(_chip,_model,_mac,_activeid,_category,_title,_content,_contact,_picurl, function(err,result) {
+            if(err) {
+              return output.error(req,res,err);
+            } else {
+              console.log(JSON.stringify(result));
+              return res.json({"errcode": 00000, "errmsg": "提交成功"});
+            }
+        });
+    });
+
+    form.on('error', function(err) {
+        console.log('onError err = ' + err);
+        return res.json({"errcode": 40002, "errmsg": "监听发生错误"});
+    }); 
   };
 
   exports.queryFeedback = function (req, res, next) {
 
-    // console.log('addFeedbackExtra = ' + JSON.stringify(req.body));
-    // let chip = validator.trim(req.body.chip);
-    // let model = validator.trim(req.body.model);
-    // let mac = validator.trim(req.body.mac);
-    // let activeid = validator.trim(req.body.activeid);
-    // let title = validator.trim(req.body.title);
-    // let content = validator.trim(req.body.content);
-    // let category = validator.trim(req.body.category);
-
-    // helpModel.addFeedbackExtra(chip,model,title,content,category,function(err, result) {
-    //     if(err) {
-    //         return output.error(req,res,err);
-    //     } else {
-    //         console.log(JSON.stringify(result));
-    //         return res.json({"errcode": 00000, "errmsg": "提交成功"});
-    //     }
-    //  });
+    helpModel.queryFeedback(function(err, result) {
+        if(err){
+          return res.json({"errcode": 40005, "errmsg": err});
+        }
+        console.log('====>' + JSON.stringify(result));
+        return res.json({"errcode": 0, "total": result.length, "data": result});
+      });
   };
 
 

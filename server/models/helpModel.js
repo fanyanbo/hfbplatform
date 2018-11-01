@@ -80,6 +80,7 @@ helpModel.prototype.updateDiscovery = function(categoryId,titleId,likeFlag,count
       sql = "UPDATE discovery SET likeCount=likeCount+1 WHERE category_id = ? AND title_id = ?";
     } 
   }
+  console.log(sql);
   let sql_params = [categoryId,titleId];
   db.conn.query(sql,sql_params,function(err,result) {
       if(err) {
@@ -92,8 +93,6 @@ helpModel.prototype.updateDiscovery = function(categoryId,titleId,likeFlag,count
 helpModel.prototype.addFeedback = function (chip, model, mac, activeid, category, title, contact, callback) {
   let sql = "INSERT INTO feedback(chip, model, mac, activeid, category, title, contact) values (?,?,?,?,?,?,?)";
   let sql_params = [chip, model, mac, activeid, category, title, contact];
-  // let sql = "INSERT INTO test(chip, model) values (?,?)";
-  // let sql_params = [chip,model];
   console.log(sql_params);
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -106,14 +105,23 @@ helpModel.prototype.addFeedback = function (chip, model, mac, activeid, category
 helpModel.prototype.addFeedbackExtra = function (chip, model, mac, activeid, category, title, content, contact, picurl, callback) {
   let sql = "INSERT INTO feedback(chip, model, mac, activeid, category, title, content, contact, picurl) values (?,?,?,?,?,?,?,?,?)";
   let sql_params = [chip, model, mac, activeid, category, title, content, contact, picurl];
-  // let sql = "INSERT INTO test(chip, model) values (?,?)";
-  // let sql_params = [chip,model];
   console.log(sql_params);
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
         return callback(err);
     }
     callback(null, rows);
+  });
+}
+
+helpModel.prototype.queryFeedback = function(callback) {
+ 
+  let sql = "SELECT * FROM feedback";
+  db.conn.query(sql,[],function(err,result) {
+      if(err) {
+        return callback(err);
+      }
+      callback(null,result);
   });
 }
 

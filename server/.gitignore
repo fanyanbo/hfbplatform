@@ -8,3 +8,5 @@ coverage.html
 *.log
 *.swp
 *.sql
+
+public
