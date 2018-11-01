@@ -67,7 +67,7 @@ helpModel.prototype.updateDiscovery = function(categoryId,titleId,likeFlag,count
  
   console.log(categoryId + ' ' + titleId + ' ' + likeFlag + ' ' + countflag);
   let sql;
-  if(likeFlag === 0) { //表示点踩
+  if(likeFlag == 0) { //表示点踩
     if(countflag == 0) { //表示撤销点踩
       sql = "UPDATE discovery SET dislikeCount=dislikeCount-1 WHERE category_id = ? AND title_id = ?";
     }else {
