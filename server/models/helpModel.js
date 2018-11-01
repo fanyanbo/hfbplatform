@@ -40,7 +40,7 @@ helpModel.prototype.addIssue = function (chip, model, mac, activeid, category, t
 helpModel.prototype.updateIssue = function(chip, model, mac, likeCount, dislikeCount,callback) {
  
   console.log(chip + ' ' + model + ' ' + mac + ' ' + likeCount + ' ' + dislikeCount);
-  let sql = "UPDATE issue SET dislikeCount=?,likeCount = ?  WHERE chip = ? AND model = ? AND mac = ?";
+  let sql = "UPDATE issue SET dislikeCount=?,likeCount = ? WHERE chip = ? AND model = ? AND mac = ?";
   console.log(sql);
   let sql_params = [dislikeCount,likeCount,chip,model,mac];
   db.conn.query(sql,sql_params,function(err,result) {

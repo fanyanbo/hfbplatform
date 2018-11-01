@@ -23,7 +23,7 @@
         </el-col>
 
       <!--列表-->
-      <el-table :data="users" highlight-current-row v-loading="loading" style="width: 100%;">
+      <el-table :data="users.slice((currentPage-1)*pageSize,currentPage*pageSize)" highlight-current-row v-loading="loading" style="width: 100%;">
         <el-table-column type="index" width="60">
         </el-table-column>
         <el-table-column prop="chip" label="机芯" width="120">
@@ -34,8 +34,6 @@
         </el-table-column>
         <el-table-column prop="issueContent" label="问题描述" min-width="160" align="center">
         </el-table-column>
-        <!-- <el-table-column prop="picList" label="图片名称" min-width="120">
-        </el-table-column> -->
         <el-table-column prop="optTime" label="提交时间">
         </el-table-column>
                 <el-table-column label="查看图片" type="expand" width="150">
@@ -49,6 +47,16 @@
                 </template>
             </el-table-column>
       </el-table>
+    <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="pageSize"
+          layout="total, prev, pager, next"
+          :total="total"
+          style="margin-top:10px">
+    </el-pagination>
     </el-col>
   </el-row>
 </template>
@@ -61,10 +69,17 @@
       return {
         loading: false,
         users: [],
+        total: 5,
+        currentPage: 1,
+　　　　 pageSize: 10,
         filters: {
           name: ''
         }
       }
+    },
+    created: function() {
+        console.log('created');
+        this.fetchData();
     },
     methods: {
         handleSearch() {
@@ -86,7 +101,17 @@
                 console.log(error);
                 that.$message.error({showClose: true, message: '请求出现异常', duration: 2000});
             });
-        } 
+        },
+        handleSizeChange(val) {
+          console.log(`每页 ${val} 条`);
+        },
+        handleCurrentChange(val) {
+          console.log(`当前页: ${val}`);
+          this.currentPage = val;
+        },
+        fetchData() {
+          this.handleSearch();
+        }
     }
   }
 </script>
