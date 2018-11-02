@@ -13,6 +13,7 @@ import Feedback from '@/components/page/feedback'
 import Help from '@/components/page/help'
 import FeedbackQ from '@/components/page/feedbackq'
 import HelpQ from '@/components/page/helpq'
+import DiscoveryQ from '@/components/page/discoveryq'
 
 // 懒加载方式，当路由被访问的时候才加载对应组件
 const Login = resolve => require(['@/components/Login'], resolve)
@@ -53,7 +54,8 @@ export default new Router({
         {path: '/feekback', component: Feedback, name: '反馈管理', menuShow: true, iconCls: 'iconfont icon-books2'},
         {path: '/help', component: Help, name: '帮助管理', menuShow: true, iconCls: 'iconfont icon-users'}, 
         {path: '/feekbackq', component: FeedbackQ, name: '反馈查询', menuShow: true, iconCls: 'iconfont icon-books2'},
-        {path: '/helpq', component: HelpQ, name: '探索发现查询', menuShow: true, iconCls: 'iconfont icon-users'}
+        {path: '/discoveryq', component: DiscoveryQ, name: '探索发现查询', menuShow: true, iconCls: 'iconfont icon-users'},
+        {path: '/helpq', component: HelpQ, name: '帮助查询', menuShow: true, iconCls: 'iconfont icon-users'},
       ]
     },
     {

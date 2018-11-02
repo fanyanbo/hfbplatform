@@ -74,20 +74,16 @@ export default {
     return API.POST('/help/queryIssue', params)
   },
 
-  getCase: params => {
-    return API.POST('/help/getCase', params);
-  },
-
-  addCase: params => {
-    return API.POST('/help/addCase', params);
-  },
-
   fetchFeedbackData: params => {
     return API.POST('/help/queryFeedback', params);
   },
 
   fetchDiscoveryData: params => {
     return API.POST('/help/queryDiscovery', params);
-  }
+  },
+
+  fetchHelpData: params => {
+    return API.POST('/help/queryIssue', params);
+  },
 
 }

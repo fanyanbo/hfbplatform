@@ -22,10 +22,6 @@ router.get('/getinfo', function(req, res, next) {
 router.post('/uploadInfo', function(req, res) { 
     res.json({"code": 0000, "msg": "数据提交成功"});
 });
-router.post('/uploadIssue', helpController.uploadIssue);
-router.post('/queryIssue', helpController.queryIssue);
-router.post('/getCase', helpController.queryCase);
-router.post('/addCase', helpController.addCase);
 
 router.post('/queryDiscovery',helpController.queryDiscovery);
 router.post('/updateDiscovery',helpController.updateDiscovery);
@@ -34,5 +30,6 @@ router.post('/addFeedbackExtra',helpController.addFeedbackExtra);
 router.post('/queryFeedback',helpController.queryFeedback);
 router.post('/addIssue',helpController.addIssue);
 router.post('/updateIssue',helpController.updateIssue);
+router.post('/queryIssue',helpController.queryIssue);
 
 module.exports = router;

@@ -4,7 +4,7 @@
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
         <el-breadcrumb-item>帮助反馈</el-breadcrumb-item>
-        <el-breadcrumb-item>帮助查询</el-breadcrumb-item>
+        <el-breadcrumb-item>探索发现查询</el-breadcrumb-item>
       </el-breadcrumb>
     </el-col>
 
@@ -26,17 +26,9 @@
       <el-table :data="users.slice((currentPage-1)*pageSize,currentPage*pageSize)" highlight-current-row v-loading="loading" style="width: 100%;">
         <el-table-column type="index" width="60">
         </el-table-column>
-        <el-table-column prop="chip" label="机芯" width="80" align="center">
+        <el-table-column prop="category_desc" label="分类" width="200" align="center">
         </el-table-column>
-        <el-table-column prop="model" label="机型" width="80" align="center">
-        </el-table-column>
-        <el-table-column prop="mac" label="MAC" width="120" align="center">
-        </el-table-column>
-        <el-table-column prop="activeid" label="激活id" width="120" align="center">
-        </el-table-column>
-        <el-table-column prop="category" label="分类" width="200" align="center">
-        </el-table-column>
-        <el-table-column prop="title" label="标题" min-width="300" align="center">
+        <el-table-column prop="title_desc" label="标题" min-width="300" align="center">
         </el-table-column>
         <el-table-column prop="likeCount" label="点赞数" align="center">
         </el-table-column>
@@ -82,7 +74,7 @@
             let that = this;
             that.loading = true;
 
-            API.fetchHelpData().then(function (result) {
+            API.fetchDiscoveryData().then(function (result) {
                 console.log(result);
                 that.loading = false;
                 if (result && result.data) {
