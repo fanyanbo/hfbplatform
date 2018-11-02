@@ -79,8 +79,15 @@ export default {
   },
 
   addCase: params => {
-    console.log('aaa = ' + JSON.stringify(params));
     return API.POST('/help/addCase', params);
+  },
+
+  fetchFeedbackData: params => {
+    return API.POST('/help/queryFeedback', params);
+  },
+
+  fetchDiscoveryData: params => {
+    return API.POST('/help/queryDiscovery', params);
   }
 
 }

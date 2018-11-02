@@ -4,7 +4,7 @@
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
         <el-breadcrumb-item>帮助反馈</el-breadcrumb-item>
-        <el-breadcrumb-item>反馈查询</el-breadcrumb-item>
+        <el-breadcrumb-item>探索发现查询</el-breadcrumb-item>
       </el-breadcrumb>
     </el-col>
 
@@ -23,24 +23,28 @@
         </el-col>
 
       <!--列表-->
-      <el-table :data="users" highlight-current-row v-loading="loading" style="width: 100%;">
+      <el-table :data="users.slice((currentPage-1)*pageSize,currentPage*pageSize)" highlight-current-row v-loading="loading" style="width: 100%;">
         <el-table-column type="index" width="60">
         </el-table-column>
-        <el-table-column prop="chip" label="机芯" width="120">
+        <el-table-column prop="category_desc" label="分类" width="200" align="center">
         </el-table-column>
-        <el-table-column prop="model" label="机型" width="120">
+        <el-table-column prop="title_desc" label="标题" min-width="300" align="center">
         </el-table-column>
-        <el-table-column prop="title" label="标题" width="100">
+        <el-table-column prop="likeCount" label="点赞数" align="center">
         </el-table-column>
-        <el-table-column prop="content" label="内容" min-width="160" align="center">
-        </el-table-column>
-        <el-table-column prop="category""" label="案例分类" min-width="120">
-        </el-table-column>
-        <el-table-column prop="likeCount" label="点赞数">
-        </el-table-column>
-        <el-table-column prop="dislikeCount" label="踩数">
+        <el-table-column prop="dislikeCount" label="踩数" align="center">
         </el-table-column>
       </el-table>
+      <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="pageSize"
+          layout="total, prev, pager, next"
+          :total="total"
+          style="margin-top:10px">
+    </el-pagination>
     </el-col>
   </el-row>
 </template>
@@ -51,19 +55,26 @@
   export default {
     data() {
       return {
+        currentPage: 1,
+　　　　 pageSize: 10,
         loading: false,
+        total: 0,
         users: [],
         filters: {
           name: ''
         }
       }
     },
+    created: function() {
+        console.log('created');
+        this.fetchData();
+    },
     methods: {
         handleSearch() {
             let that = this;
             that.loading = true;
 
-            API.getCase().then(function (result) {
+            API.fetchDiscoveryData().then(function (result) {
                 console.log(result);
                 that.loading = false;
                 if (result && result.data) {
@@ -78,6 +89,16 @@
                 console.log(error);
                 that.$message.error({showClose: true, message: '请求出现异常', duration: 2000});
             });
+        },
+        handleSizeChange(val) {
+          console.log(`每页 ${val} 条`);
+        },
+        handleCurrentChange(val) {
+          console.log(`当前页: ${val}`);
+          this.currentPage = val;
+        },
+        fetchData() {
+          this.handleSearch();
         }
     }
   }

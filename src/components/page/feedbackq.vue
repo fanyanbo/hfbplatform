@@ -24,25 +24,31 @@
 
       <!--列表-->
       <el-table :data="users.slice((currentPage-1)*pageSize,currentPage*pageSize)" highlight-current-row v-loading="loading" style="width: 100%;">
-        <el-table-column type="index" width="60">
+        <!-- <el-table-column type="index" width="60">
+        </el-table-column> -->
+        <el-table-column prop="chip" label="机芯" width="80" align="center">
         </el-table-column>
-        <el-table-column prop="chip" label="机芯" width="120">
+        <el-table-column prop="model" label="机型" width="80" align="center">
         </el-table-column>
-        <el-table-column prop="model" label="机型" width="120">
+        <el-table-column prop="mac" label="MAC" width="120" align="center">
         </el-table-column>
-        <el-table-column prop="issueType" label="问题类型" width="100">
+        <el-table-column prop="activeid" label="激活id" width="120" align="center">
         </el-table-column>
-        <el-table-column prop="issueContent" label="问题描述" min-width="160" align="center">
+        <el-table-column prop="category" label="类型" width="150" align="center">
         </el-table-column>
-        <el-table-column prop="optTime" label="提交时间">
+        <el-table-column prop="title" label="标题" width="400" align="center">
+        </el-table-column>
+        <el-table-column prop="content" label="描述" min-width="200" align="center">
+        </el-table-column>
+        <el-table-column prop="optTime" label="提交时间" width="150" align="center">
         </el-table-column>
                 <el-table-column label="查看图片" type="expand" width="150">
                 <template slot-scope="props">
-                  <el-form label-position="rigth" inline class="demo-table-expand">
+                  <el-form label-position="right" inline class="demo-table-expand">
                     <el-form-item label="图片地址">
-                      <span>{{ props.row.picList }}</span>
+                      <span>{{ props.row.picurl }}</span>
                     </el-form-item>
-                    <img :src="props.row.picList" class="image">
+                    <img :src="props.row.picurl" class="image">
                   </el-form>
                 </template>
             </el-table-column>
@@ -86,7 +92,7 @@
             let that = this;
             that.loading = true;
 
-            API.getIssue().then(function (result) {
+            API.fetchFeedbackData().then(function (result) {
                 console.log(result);
                 that.loading = false;
                 if (result && result.data) {

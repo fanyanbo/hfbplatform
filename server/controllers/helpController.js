@@ -160,10 +160,12 @@ exports.queryCase = function (req, res, next) {
     let chip = req.body.chip;
     let model = req.body.model;
     let mac = req.body.mac;
+    let category = req.body.category;
+    let title = req.body.title;
     let likeCount =  req.body.likeCount;
     let dislikeCount =  req.body.dislikeCount;
 
-    helpModel.updateIssue(chip,model,mac,likeCount,dislikeCount,function(err, result) {
+    helpModel.updateIssue(chip,model,mac,category,title,likeCount,dislikeCount,function(err, result) {
        if(err){
          return res.json({"errcode": 40005, "errmsg": err});
        }

@@ -53,7 +53,7 @@ export default new Router({
         {path: '/feekback', component: Feedback, name: '反馈管理', menuShow: true, iconCls: 'iconfont icon-books2'},
         {path: '/help', component: Help, name: '帮助管理', menuShow: true, iconCls: 'iconfont icon-users'}, 
         {path: '/feekbackq', component: FeedbackQ, name: '反馈查询', menuShow: true, iconCls: 'iconfont icon-books2'},
-        {path: '/helpq', component: HelpQ, name: '帮助查询', menuShow: true, iconCls: 'iconfont icon-users'}
+        {path: '/helpq', component: HelpQ, name: '探索发现查询', menuShow: true, iconCls: 'iconfont icon-users'}
       ]
     },
     {
