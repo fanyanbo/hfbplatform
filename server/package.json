@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "supervisor ./bin/www"
+    "start": "supervisor ./bin/www",
+    "wdev": "SET NODE_ENV=dev && node ./bin/www",
+    "wbuild": "SET NODE_ENV=production && node ./bin/www",
+    "ldev": "export NODE_ENV=dev && node ./bin/www",
+    "lbuild": "export NODE_ENV=production && node ./bin/www",
   },
   "dependencies": {
     "body-parser": "~1.18.2",

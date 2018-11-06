@@ -57,6 +57,8 @@ app.use(cors({
     credentials:true
 }));
 
+console.log(process.env.NODE_ENV);
+
 // app.use('/', index);
 app.use('/help', helpRouter);
 app.use('/', signRouter);
