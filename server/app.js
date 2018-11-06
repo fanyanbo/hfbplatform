@@ -20,7 +20,8 @@ var helpRouter = require('./routes/help_router');
 var app = express();
 
 // 静态文件目录
-var staticDir = path.join(__dirname, 'public');
+var staticDir = path.join(__dirname, '../dist');
+// var staticDir = path.join(__dirname, 'public');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -49,7 +50,7 @@ app.use(express.static(staticDir));
 //   next();
 // });
 app.use(cors({
-    origin:['http://localhost:8080',['http://172.20.139.139'],['https://beta.webapp.skysrt.com'],['http://beta.webapp.skysrt.com']],
+    origin:['https://beta.webapp.skysrt.com','http://beta.webapp.skysrt.com'],
     // origin:['http://172.20.133.47:8080'],
     methods:['GET','POST'],
     alloweHeaders:['Conten-Type','Authorization','Content-Length', 'Accept,X-Requested-With'],
