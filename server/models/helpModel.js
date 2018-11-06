@@ -40,7 +40,7 @@ helpModel.prototype.queryIssue= function(callback) {
 }
 
 helpModel.prototype.queryDiscovery = function(callback) {
- 
+  
   let sql = "SELECT * FROM discovery";
   db.conn.query(sql,[],function(err,result) {
       if(err) {

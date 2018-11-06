@@ -66,8 +66,8 @@ export default {
     return API.POST('/help/uploadInfo', params)
   },
 
-  submitIssue: params => {
-    return API.POST('/help/uploadIssue', params)
+  submitFeedbackData: params => {
+    return API.POST('/help/addFeedbackExtra', params)
   },
 
   getIssue: params => {

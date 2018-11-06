@@ -14,7 +14,7 @@ exports.startQuerySchedule = function () {
     rule.minute = minutes;
     rule.second = seconds;
     _schedule = schedule.scheduleJob(rule,function(){
-      helpModel.queryDiscovery(null, function(err,result){
+      helpModel.queryDiscovery(function(err,result){
         if(err) logger.error('计时器查询发生错误');
         else {
           logger.info('query schedule: ' + new Date());

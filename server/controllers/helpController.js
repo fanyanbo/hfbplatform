@@ -129,22 +129,27 @@ exports.updateIssue = function (req, res, next) {
             console.log('error ' + err);
             return res.json({"errcode": 40002, "errmsg": "解析发生错误"});
         }
-        var filename = files.file.name
-        var nameArray = filename.split('.');
-        var type = nameArray[nameArray.length - 1];
-        var name = '';
-        for (var i = 0; i < nameArray.length - 1; i++) {
+        let filename = files.file.name
+        let nameArray = filename.split('.');
+        let type = nameArray[nameArray.length - 1];
+        let name = '';
+        for (let i = 0; i < nameArray.length - 1; i++) {
             name = name + nameArray[i];
         }
-        var date = new Date();
-        var time = '_' + date.getFullYear() + "_" + date.getMonth() + "_" + date.getDay() + "_" + date.getHours() + "_" + date.getMinutes();
-        var avatarName = name + time + '.' + type;
+        let date = new Date();
+        let time = '_' + date.getFullYear() + "_" + date.getMonth() + "_" + date.getDay() + "_" + date.getHours() + "_" + date.getMinutes();
+        let avatarName = name + time + '.' + type;
         console.log(avatarName);
-        var newPath = form.uploadDir + "/" + avatarName;
+        let newPath = form.uploadDir + "/" + avatarName;
         console.log(newPath);
         fs.renameSync(files.file.path, newPath); 
-        // picName = "http://172.20.133.47:3010/upload/" + avatarName;
-        _picurl = "http://172.20.133.47:3010/upload/" + avatarName;
+
+        let picurlP = "http://172.20.133.47:3010/upload/" + avatarName;
+        let picurlD = "http://localhost:3010/upload/" + avatarName;
+
+        process.env.NODE_ENV === 'development' ? _picurl = picurlP : _picurl = picurlD;
+
+        console.log(_picurl);
 
         helpModel.addFeedbackExtra(_chip,_model,_mac,_activeid,_category,_title,_content,_contact,_picurl, function(err,result) {
             if(err) {

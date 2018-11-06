@@ -12,7 +12,7 @@
         <el-upload
         class="upload-demo"
         ref="upload"
-        action="http://localhost:3010/help/uploadInfo" 
+        :action="actionUrl"
         :on-change="handleChanged"
         :before-upload="beforeUpload"
         :on-preview="handlePreview"
@@ -38,10 +38,16 @@
   export default {
     data() {
       return {
+        actionUrl: '',
         dialogImageUrl: '',
         dialogVisible: false,
         count: 0
       }
+    },
+    mounted: function() {
+        console.log('mounted');
+        process.env.NODE_ENV === 'development' ? this.actionUrl = 'http://localhost:3010/help/uploadInfo' : this.actionUrl = 'http://172.20.133.47:3010/help/uploadInfo';
+        console.log('actionUrl = ' + this.actionUrl);
     },
     methods: {
         handlePictureCardPreview(file) {
@@ -60,10 +66,13 @@
             fd.append('file', param);
             fd.append('chip', '9S52');
             fd.append('model', 'Q4A');
-            fd.append('issueType','a');
-            fd.append('issueContent','b');
-            fd.append('contact','1382345930');
-            API.submitIssue(fd).then(
+            fd.append('mac','eeeeeffff');
+            fd.append('activeid','1234567');
+            fd.append('category','管理平台测试');
+            fd.append('title','管理平台测试');
+            fd.append('content','管理平台测试');
+            fd.append('contact','12345678');
+            API.submitFeedbackData(fd).then(
                 function (result) {
                     console.log(result);
                 }, 
