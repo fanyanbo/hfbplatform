@@ -39,7 +39,7 @@ app.use(cookieParser());
 app.use(compress());
 // 静态文件目录
 app.use(express.static(staticDir));
-
+app.use(express.static(path.join(__dirname, './public')));
 // 进行跨域访问设置
 //app.use(cors());
 // app.use('/',function(req, res, next){

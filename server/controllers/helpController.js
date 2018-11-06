@@ -147,7 +147,7 @@ exports.updateIssue = function (req, res, next) {
         let picurlP = "http://172.20.133.47:3010/upload/" + avatarName;
         let picurlD = "http://localhost:3010/upload/" + avatarName;
 
-        process.env.NODE_ENV === 'development' ? _picurl = picurlP : _picurl = picurlD;
+        process.env.NODE_ENV.trim() == 'development' ? _picurl = picurlD : _picurl = picurlP;
 
         console.log(_picurl);
 

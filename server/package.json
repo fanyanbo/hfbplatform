@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "supervisor ./bin/www",
-    "wdev": "SET NODE_ENV=development && node ./bin/www",
-    "wbuild": "SET NODE_ENV=production && node ./bin/www",
+    "wdev": "SET NODE_ENV=development && supervisor ./bin/www",
+    "wbuild": "SET NODE_ENV=production && supervisor ./bin/www",
     "ldev": "export NODE_ENV=development && node ./bin/www",
     "lbuild": "export NODE_ENV=production && node ./bin/www"
   },
