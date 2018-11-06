@@ -9,4 +9,4 @@ coverage.html
 *.swp
 *.sql
 
-public
+public/upload
