@@ -10,12 +10,12 @@ var cors = require('cors');
 var helmet = require('helmet');
 var compress = require('compression');
 var requestLog = require('./common/request_log');
+var schedule = require('./common/schedule');
 var config = require('./config/config');
 
 var signRouter = require('./routes/sign_router');
 var apiRouterV1 = require('./routes/api_router_v1');
 var helpRouter = require('./routes/help_router');
-// var users = require('./routes/users');
 
 var app = express();
 
@@ -61,6 +61,8 @@ app.use('/help', helpRouter);
 app.use('/', signRouter);
 app.use('/v1', apiRouterV1);
 
+schedule.startQuerySchedule();
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -78,5 +80,12 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+process.on('uncaughtException', function (err) {
+  logger.error(err.stack);
+  logger.error("Node NOT Exiting...");
+  schedule.cancelSchedule();
+});
+
 
 module.exports = app;
