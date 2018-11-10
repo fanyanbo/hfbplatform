@@ -43,7 +43,7 @@ var config = {
   log_dir: path.join(__dirname, '../logs'),
 
   // 设置log输出路径等级:trace,debug,info,warn,error
-  log_file_level: 'error',
+  log_file_level: 'warn',
   log_console_level: 'trace',
   //设置当前输出路径：file,console,default
   log_cur: 'file',

@@ -3,9 +3,9 @@ let helpModel = require('../models/helpModel');
 let logger = require('./logger');
 
 let _schedule;
-// 开启定时查询任务，目的保持连接的活跃，防止8小时断开
+// 开启定时查询任务，保持连接的活跃，防止8小时断开
 exports.startQuerySchedule = function () {
-    logger.info('startQuerySchedule...');
+    logger.warn('startQuerySchedule...');
     let rule = new schedule.RecurrenceRule();
     let hours = [1,7,13,19];
     let minutes = [30];
