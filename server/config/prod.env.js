@@ -1,5 +1,5 @@
 /**
- * config.js
+ * prod.env.js
  * author : fanyanbo@coocaa.com
  */
 
@@ -17,11 +17,12 @@ var config = {
   description: '基于酷开系统的帮助与反馈业务平台', // 平台的描述
   keywords: 'nodejs, node, express, mysql',
 
-  // 域名
+  // 域名？
   host: '172.20.133.47',
   // 程序运行的端口
   port: 3010,
 
+  //数据库？
   mysql: {
     user: 'webx', // 用户名
     password: 'WebX_MySQL2018', // 密码
@@ -42,7 +43,7 @@ var config = {
   log_dir: path.join(__dirname, '../logs'),
 
   // 设置log输出路径等级:trace,debug,info,warn,error
-  log_file_level: 'error',
+  log_file_level: 'warn',
   log_console_level: 'trace',
   //设置当前输出路径：file,console,default
   log_cur: 'file',

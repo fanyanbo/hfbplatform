@@ -1,4 +1,4 @@
-var config = require('../config/config');
+var config = require('../config/index');
 var pathLib = require('path')
 
 var env = process.env.NODE_ENV || "development"

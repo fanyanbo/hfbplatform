@@ -1,9 +1,10 @@
-var validator = require('validator');
-var output = require('../common/output');
-var helpModel = require('../models/helpModel');
-var fs = require('fs');
-var path= require("path");
-var formidable = require('formidable');
+let validator = require('validator');
+let output = require('../common/output');
+let helpModel = require('../models/helpModel');
+let fs = require('fs');
+let path= require("path");
+let formidable = require('formidable');
+let config = require('../config/index');
 
 exports.queryDiscovery = function (req, res, next) {
 
@@ -144,10 +145,7 @@ exports.updateIssue = function (req, res, next) {
         console.log(newPath);
         fs.renameSync(files.file.path, newPath); 
 
-        let picurlP = "http://172.20.133.47:3010/upload/" + avatarName;
-        let picurlD = "http://localhost:3010/upload/" + avatarName;
-
-        process.env.NODE_ENV.trim() == 'development' ? _picurl = picurlD : _picurl = picurlP;
+        _picurl = "http://" + config.host + ":" + config.port + "/upload/" + avatarName;
 
         console.log(_picurl);
 

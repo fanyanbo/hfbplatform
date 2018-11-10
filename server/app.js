@@ -11,7 +11,7 @@ var helmet = require('helmet');
 var compress = require('compression');
 var requestLog = require('./common/request_log');
 var schedule = require('./common/schedule');
-var config = require('./config/config');
+var config = require('./config/index');
 
 var signRouter = require('./routes/sign_router');
 var apiRouterV1 = require('./routes/api_router_v1');
@@ -56,8 +56,6 @@ app.use(cors({
     alloweHeaders:['Conten-Type','Authorization','Content-Length', 'Accept,X-Requested-With'],
     credentials:true
 }));
-
-console.log(process.env.NODE_ENV);
 
 // app.use('/', index);
 app.use('/help', helpRouter);

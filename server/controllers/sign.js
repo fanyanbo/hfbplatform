@@ -1,7 +1,4 @@
 var validator = require('validator');
-var eventproxy = require('eventproxy');
-var utility = require('utility');
-var config = require('../config/config');
 var output = require('../common/output');
 var logger = require('../common/logger');
 var userModel = require('../models/userModel');

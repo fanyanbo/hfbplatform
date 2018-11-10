@@ -5,9 +5,6 @@
  */
 
 var express = require('express');
-var config = require('../config/config');
-var logger = require('../common/logger');
-var output = require('../common/output');
 
 var router = express.Router();
 
