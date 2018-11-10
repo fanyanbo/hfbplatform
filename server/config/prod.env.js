@@ -7,23 +7,22 @@ var path = require('path');
 
 var config = {
   // debug 为 true 时，用于本地调试
-  debug: true,
+  debug: false,
 
   rootPath: path.join(__dirname, '../'),
 
   get mini_assets() { return !this.debug; }, // 是否启用静态文件的合并压缩，详见视图中的Loader
 
-  name: '帮助与反馈平台', // 平台名字
+  name: '帮助与反馈业务平台', // 平台名字
   description: '基于酷开系统的帮助与反馈业务平台', // 平台的描述
   keywords: 'nodejs, node, express, mysql',
 
   // 域名
-  host: 'localhost',
-
+  host: '172.20.133.47',
   // 程序运行的端口
   port: 3010,
 
-  mysql_help: {
+  mysql: {
     user: 'webx', // 用户名
     password: 'WebX_MySQL2018', // 密码
     database: 'help', // 数据库
@@ -47,9 +46,6 @@ var config = {
   log_console_level: 'trace',
   //设置当前输出路径：file,console,default
   log_cur: 'file',
-
-  // oneapm 是个用来监控网站性能的服务
-  oneapm_key: '',
 
   file_limit: '1MB',
 
