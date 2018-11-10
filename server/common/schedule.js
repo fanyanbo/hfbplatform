@@ -17,8 +17,8 @@ exports.startQuerySchedule = function () {
       helpModel.queryDiscovery(function(err,result){
         if(err) logger.error('计时器查询发生错误');
         else {
-          logger.info('query schedule: ' + new Date());
-          logger.info('query result: ' + JSON.stringify(result[0]));
+          logger.warn('query schedule: ' + new Date());
+          logger.warn('query result: ' + JSON.stringify(result[0]));
         }
       });
     })
