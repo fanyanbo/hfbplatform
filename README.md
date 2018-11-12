@@ -1,9 +1,15 @@
-# 帮助与反馈平台
+# 帮助与反馈-管理平台
 
-开启web server
-1.cd server
-2.npm start
+> 采用vue element-ui等技术栈实现
 
-编译平台代码
-1.npm run dev
-2.浏览器输入地址
+## Build Setup
+
+``` bash
+# start web server
+cd server & npm start
+
+# run the project with prodution
+npm run build
+
+# run the project with developmeng
+npm run dev
