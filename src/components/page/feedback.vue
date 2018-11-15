@@ -46,7 +46,7 @@
     },
     mounted: function() {
         console.log('mounted');
-        process.env.NODE_ENV === 'development' ? this.actionUrl = 'http://localhost:3010/help/uploadInfo' : this.actionUrl = 'http://172.20.133.47:3010/help/uploadInfo';
+        process.env.NODE_ENV === 'development' ? this.actionUrl = 'http://localhost:3010/help/uploadInfo' : this.actionUrl = 'http://111.230.166.172:3010/help/uploadInfo';
         console.log('actionUrl = ' + this.actionUrl);
     },
     methods: {

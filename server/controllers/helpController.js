@@ -5,6 +5,7 @@ let fs = require('fs');
 let path= require("path");
 let formidable = require('formidable');
 let config = require('../config/index');
+var logger = require('../common/logger');
 
 exports.queryDiscovery = function (req, res, next) {
 
@@ -111,7 +112,8 @@ exports.updateIssue = function (req, res, next) {
     console.log('addFeedbackExtra = ' + JSON.stringify(req.body));
     var form = new formidable.IncomingForm();
     form.encoding = 'utf-8';
-    form.uploadDir = path.join(__dirname + "/../public/upload");
+    logger.error("__dirname = " + __dirname);
+    form.uploadDir = path.join(__dirname + "../public/upload");
     form.keepExtensions = true;
     form.maxFieldsSize = 5 * 1024 * 1024;
     form.parse(req, function (err, fields, files){
