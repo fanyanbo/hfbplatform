@@ -13,12 +13,12 @@ var config = {
 
   get mini_assets() { return !this.debug; }, // 是否启用静态文件的合并压缩，详见视图中的Loader
 
-  name: '帮助与反馈业务平台', // 平台名字
+  name: '帮助与反馈平台', // 平台名字
   description: '基于酷开系统的帮助与反馈业务平台', // 平台的描述
   keywords: 'nodejs, node, express, mysql',
 
   // 域名？
-  host: '172.20.133.47',
+  host: '111.230.166.172',
   // 程序运行的端口
   port: 3010,
 
@@ -27,7 +27,7 @@ var config = {
     user: 'webx', // 用户名
     password: 'WebX_MySQL2018', // 密码
     database: 'help', // 数据库
-    host: '172.20.133.47', // host
+    host: 'localhost', // host
     port: 3306, // 端口
     checkExpirationInterval: 24*60*60*1000, // How frequently expired sessions will be cleared; milliseconds
     connectionLimit: 1, // 连接池的连接个数，默认为 1

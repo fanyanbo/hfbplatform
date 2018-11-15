@@ -4,7 +4,7 @@ var sign = require('../controllers/sign');
 
 /* GET users listening. */
 router.get('/', function(req, res, next) {
-  res.send('aa请登录网址：http://www.baidu.com');
+  res.send('您好，请登录网址：http://www.coocaa.com');
   // res.redirect('http://localhost:3018/html/login.html');
 });
 
