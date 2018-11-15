@@ -17,8 +17,8 @@ var config = {
   description: '基于酷开系统的帮助与反馈业务平台', // 平台的描述
   keywords: 'nodejs, node, express, mysql',
 
-  // 域名？
-  host: '111.230.166.172',
+  // 协议+域名+端口？
+  host: 'https://webx.coocaa.com',
   // 程序运行的端口
   port: 3010,
 

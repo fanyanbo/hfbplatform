@@ -147,7 +147,7 @@ exports.updateIssue = function (req, res, next) {
         console.log(newPath);
         fs.renameSync(files.file.path, newPath); 
 
-        _picurl = "http://" + config.host + ":" + config.port + "/upload/" + avatarName;
+        _picurl = config.host + "/upload/" + avatarName;
 
         console.log(_picurl);
 
