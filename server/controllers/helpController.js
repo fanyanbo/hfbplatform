@@ -113,7 +113,7 @@ exports.updateIssue = function (req, res, next) {
     var form = new formidable.IncomingForm();
     form.encoding = 'utf-8';
     logger.error("__dirname = " + __dirname);
-    form.uploadDir = path.join(__dirname + "../public/upload");
+    form.uploadDir = path.join(__dirname + "/../public/upload");
     form.keepExtensions = true;
     form.maxFieldsSize = 5 * 1024 * 1024;
     form.parse(req, function (err, fields, files){
