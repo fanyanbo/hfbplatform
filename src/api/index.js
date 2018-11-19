@@ -36,7 +36,7 @@ axios.interceptors.response.use(function (response) {
 // let base = 'http://172.20.133.47:3010';  //接口代理地址参见：config/index.js中的proxyTable配置
 // let base = 'http://localhost:3010';  //接口代理地址参见：config/index.js中的proxyTable配置
 let base;
-process.env.NODE_ENV === 'development' ? base = 'http://localhost:3010' : base = 'https://webx.coocaa.com';
+process.env.NODE_ENV === 'development' ? base = 'http://localhost:3010' : base = 'https://webx.coocaa.com/hfdplatform';
 
 console.log('base = ' + base);
 
