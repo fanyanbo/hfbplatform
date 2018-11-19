@@ -3,8 +3,8 @@ var router = express.Router();
 var sign = require('../controllers/sign');
 
 /* GET users listening. */
-router.get('/', function(req, res, next) {
-  res.send('您好，请登录网址：http://www.coocaa.com');
+router.get('/test', function(req, res, next) {
+  res.send('您好，欢迎访问帮助反馈接口，请登录网址：http://www.coocaa.com');
   // res.redirect('http://localhost:3018/html/login.html');
 });
 

@@ -18,7 +18,7 @@ var config = {
   keywords: 'nodejs, node, express, mysql',
 
   // 协议+域名+端口？
-  host: 'https://webx.coocaa.com/hfdplatform',
+  host: 'https://webx.coocaa.com/hfdplatform', 
   // 程序运行的端口
   port: 3010,
 
