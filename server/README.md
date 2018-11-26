@@ -19,3 +19,6 @@ NODE_ENV=development forever start ./bin/www
 
 #configuration file
 cd /config
+
+#visit the website
+https://webx.coocaa.com/hfdplatform
