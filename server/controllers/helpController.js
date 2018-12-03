@@ -115,7 +115,7 @@ exports.updateIssue = function (req, res, next) {
     logger.error("__dirname = " + __dirname);
     form.uploadDir = path.join(__dirname + "/../public/upload");
     form.keepExtensions = true;
-    form.maxFieldsSize = 5 * 1024 * 1024;
+    form.maxFieldsSize = 10 * 1024 * 1024;
     form.parse(req, function (err, fields, files){
         
         console.log(fields);
