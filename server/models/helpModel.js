@@ -50,30 +50,60 @@ helpModel.prototype.queryDiscovery = function(callback) {
   });
 }
 
-helpModel.prototype.updateDiscovery = function(categoryId,titleId,likeFlag,countflag,callback) {
+helpModel.prototype.updateDiscovery = function(categoryId, titleId,likeFlag,countflag,callback) {
  
   console.log(categoryId + ' ' + titleId + ' ' + likeFlag + ' ' + countflag);
   let sql;
-  if(likeFlag == 0) { //表示点踩
+  let dislikeCount1 = 0, likeCount1 = 0;
+  
+  sql = "select likeCount,dislikeCount from discovery where category_id = \"" + categoryId +  "\" AND title_id = \"" + titleId + "\"; ";
+  db.conn.query(sql, function (err, result) {
+    if(err){
+      console.log('[SELECT ERROR] - ', err.message);
+      callback(err);
+      return;
+    }
+	
+    console.log(result);
+        
+    for (var i in result)
+    {
+      dislikeCount1 = result[i].dislikeCount;
+      likeCount1 = result[i].likeCount;
+      break;
+    }
+    
+    if(likeFlag == 0) { //表示点踩
     if(countflag == 0) { //表示撤销点踩
-      sql = "UPDATE discovery SET dislikeCount=dislikeCount-1 WHERE category_id = ? AND title_id = ?";
+      dislikeCount1--;
+      if (dislikeCount1 < 0)
+        dislikeCount1 = 0;
+      sql = "UPDATE discovery SET dislikeCount=" + dislikeCount1 + " WHERE category_id = ? AND title_id = ?";
     }else {
-      sql = "UPDATE discovery SET dislikeCount=dislikeCount+1 WHERE category_id = ? AND title_id = ?";
+      dislikeCount1++;
+      sql = "UPDATE discovery SET dislikeCount=" + dislikeCount1 + " WHERE category_id = ? AND title_id = ?";
     } 
-  } else { //表示点赞
-    if(countflag == 0) { //表示撤销点赞
-      sql = "UPDATE discovery SET likeCount=likeCount-1 WHERE category_id = ? AND title_id = ?";
-    }else {
-      sql = "UPDATE discovery SET likeCount=likeCount+1 WHERE category_id = ? AND title_id = ?";
-    } 
-  }
-  console.log(sql);
-  let sql_params = [categoryId,titleId];
-  db.conn.query(sql,sql_params,function(err,result) {
+    } else { //表示点赞
+      if(countflag == 0) { //表示撤销点赞
+      	likeCount1--;
+      	if (likeCount1 < 0)
+      	  likeCount1 = 0;
+        sql = "UPDATE discovery SET likeCount=" + likeCount1 + " WHERE category_id = ? AND title_id = ?";
+      }else {
+      	likeCount1++;
+        sql = "UPDATE discovery SET likeCount=" + likeCount1 + " WHERE category_id = ? AND title_id = ?";
+      } 
+    }
+    console.log(sql);
+    let sql_params = [categoryId,titleId];
+    db.conn.query(sql,sql_params,function(err,result) {
       if(err) {
         return callback(err);
       }
       callback(null,result);
+    });
+    
+    
   });
 }
 
