@@ -28,8 +28,11 @@ router.post('/updateDiscovery',helpController.updateDiscovery);
 router.post('/addFeedback',helpController.addFeedback);
 router.post('/addFeedbackExtra',helpController.addFeedbackExtra);
 router.post('/queryFeedback',helpController.queryFeedback);
+router.post('/queryFeedbackV2',helpController.queryFeedbackV2);
+router.get('/exportFeedbackV2',helpController.exportFeedbackV2);
 router.post('/addIssue',helpController.addIssue);
 router.post('/updateIssue',helpController.updateIssue);
 router.post('/queryIssue',helpController.queryIssue);
+router.post('/login',helpController.login);
 
 module.exports = router;

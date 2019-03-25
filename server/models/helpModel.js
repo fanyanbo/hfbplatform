@@ -143,6 +143,61 @@ helpModel.prototype.queryFeedback = function(callback) {
   });
 }
 
+helpModel.prototype.queryFeedbackV2 = function(exportFlag, date1, date2, pageSize, pageNum, callback) {
+
+  var sqltext = "";
+
+  if (date1 == "default" || date2 == "default") {
+
+    sqltext = "SELECT * FROM feedback;";
+
+  } else {
+
+    var d1 = new Date(date1);
+    var d2 = new Date(date2);
+    d2.setDate(d2.getDate() + 1);         // 往后推一天
+
+    var year1 = d1.getFullYear();
+    var mon1 = d1.getMonth() + 1;
+    var day1 = d1.getDate();
+    var year2 = d2.getFullYear();
+    var mon2 = d2.getMonth() + 1;
+    var day2 = d2.getDate();
+
+    if (mon1 < 10)
+      mon1 = "0" + mon1;
+    if (mon2 < 10)
+      mon2 = "0" + mon2;
+    if (day1 < 10)
+      day1 = "0" + day1;
+    if (day2 < 10)
+      day2 = "0" + day2;
+
+    var str1 = "" + year1 + "-" + mon1 + "-" + day1 + " 00:00:00";
+    var str2 = "" + year2 + "-" + mon2 + "-" + day2 + " 00:00:00";
+
+    sqltext = "select * from feedback where (optTime >= '" + str1 + "') and (optTime <= '" + str2 + "');";
+
+    console.log("sqltext = " + sqltext);
+  }
+
+  db.conn.query(sqltext, [], function(err, result) {
+      if(err) {
+        return callback(err);
+      }
+      callback(null, result);
+  });
+}
+
+helpModel.prototype.login = function(username, password, callback) {
+  var sqltext = 'SELECT * FROM users where userName="' + username + '" and password="' + password + '";';
+  db.conn.query(sqltext, [], function(err, result) {
+    if(err) {
+      return callback(err);
+    }
+    callback(null, result);
+  });
+}
 
 var helpModel = new helpModel();
 

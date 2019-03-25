@@ -177,5 +177,79 @@ exports.updateIssue = function (req, res, next) {
       });
   };
 
+  exports.queryFeedbackV2 = function (req, res, next) {
+
+    console.log('queryFeedbackV2 = ' + JSON.stringify(req.body));
+    let date1 = validator.trim(req.body.date1);console.log("aaaaaaaa");
+    let date2 = validator.trim(req.body.date2);console.log("bbbbbbb");
+    let pageSize = validator.trim(req.body.pageSize);console.log("ccccccccc");
+    let pageNum = validator.trim(req.body.pageNum);console.log("dddddddddd");
+
+    helpModel.queryFeedbackV2(false, date1, date2, pageSize, pageNum, function(err, result) {
+        if(err){
+          return res.json({"errcode": 40005, "errmsg": err});
+        }
+        return res.json({"errcode": 0, "total": result.length, "data": result});
+      });
+  };
+
+  exports.exportFeedbackV2 = function (req, res, next) {
+    console.log('exportFeedbackV2 = ' + JSON.stringify(req.body));
+    let date1 = validator.trim(req.query.date1);console.log("aaaaaaaa");
+    let date2 = validator.trim(req.query.date2);console.log("bbbbbbb");
+    let pageSize = validator.trim(req.query.pageSize);console.log("ccccccccc");
+    let pageNum = validator.trim(req.query.pageNum);console.log("dddddddddd");
+
+    helpModel.queryFeedbackV2(true, date1, date2, pageSize, pageNum, function(err, result) {
+        if(err){
+          return res.json({"errcode": 40005, "errmsg": err});
+        }
+
+        var filename = "export-feekback.csv";
+        res.writeHead(200, {
+          'Content-Type': 'application/octet-stream',                             //告诉浏览器这是一个二进制文件    
+          'Content-Disposition': 'attachment; filename=' + encodeURI(filename),   //告诉浏览器这是一个需要下载的文件
+        });
+        res.write('\xEF\xBB\xBF', 'binary');
+        res.write('日期,问题编号,机芯,机型,MAC,激活ID,问题类型,问题描述,图片地址,联系方式,是否已导出\n');
+        for (var i in result)
+        {
+          var curItem = result[i];
+          var arr = curItem.optTime.split(" ");
+          var curDate = arr[0];
+          res.write('' + curDate + ',');
+          res.write('' + curItem.id + ',');
+          res.write('' + curItem.chip + ',');
+          res.write('' + curItem.model + ',');
+          res.write('' + curItem.mac + ',');
+          res.write('' + curItem.activeid + ',');
+          res.write('' + curItem.category + ',');
+          res.write('' + curItem.title + ' - ' + curItem.content + ',');
+          res.write('' + curItem.picurl + ',');
+          res.write('' + curItem.contact + ',');
+          if (curItem.hasExport == 0)
+            res.write('否\n');
+          else
+            res.write('是\n');
+        }
+        res.end();
+
+        //return res.json({"errcode": 0, "total": result.length, "data": result});
+      });
+  };
+
+  exports.login = function (req, res, next) {
+
+    console.log('login = ' + JSON.stringify(req.body));
+    let username = validator.trim(req.body.username);console.log("aaaaaaaa");
+    let password = validator.trim(req.body.password);console.log("bbbbbbb");
+
+    helpModel.login(username, password, function(err, result) {
+        if(err){
+          return res.json({"errcode": 40005, "errmsg": err});
+        }
+        return res.json({"errcode": 0, "total": result.length, "data": result});
+      });
+  };
 
 
