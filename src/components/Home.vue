@@ -359,7 +359,7 @@ CREATE TABLE `feedback` (
           console.log(result);
           if (result.total > 0) {
             _this.dialogLoginVisible = false;
-            _this.userName = result.data.userName;
+            _this.userName = result.data[0].userName;
           } else {
 
           }
