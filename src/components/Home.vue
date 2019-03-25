@@ -138,7 +138,10 @@ export default {
     return {
       alldata: [],
       alltotal: 0,
+
       userNameShow: '',
+      hasLogin: false,
+
       selectDateValue: '',
       pickerOptions1: {
           shortcuts: [{
@@ -205,15 +208,26 @@ export default {
 
     checkLogin() {
       console.log("checkLogin()");
-      this.dialogLoginVisible = true;
+      let _this = this;
+      if (!this.hasLogin)       // 没有登录的话，弹出登录框
+      {
+        this.dialogLoginVisible = true;
+        setTimeout(function() {
+          _this.checkLogin();
+        }, 2000);
+      }
     },
     startupGetData() {
       
     },
 
     selectDateValueChange() {
-      console.log(this.selectDateValue);
-      this.getFeedbackData(this.selectDateValue[0], this.selectDateValue[1]);
+      if (this.hasLogin) {
+        console.log(this.selectDateValue);
+        this.getFeedbackData(this.selectDateValue[0], this.selectDateValue[1]);
+      } else {
+        console.log("not login");
+      }
     },
 
     getFeedbackData(date_1, date_2) {
@@ -259,6 +273,10 @@ export default {
 
     exportTable() {
       console.log("exportTable");
+      if (!this.hasLogin) {
+        console.log("not login");
+        return;
+      }
       var date_1 = this.selectDateValue[0];
       var date_2 = this.selectDateValue[1];
       let params = {
@@ -358,9 +376,10 @@ CREATE TABLE `feedback` (
         function (result) {
           console.log(result);
           if (result.total > 0) {
-            _this.dialogLoginVisible = false;
             _this.userNameShow = result.data[0].userName;
             console.log(_this.userNameShow);
+            _this.hasLogin = true;
+            _this.dialogLoginVisible = false;
           } else {
 
           }
