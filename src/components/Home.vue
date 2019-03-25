@@ -13,7 +13,7 @@
           <el-col :span="12">
             <div style="text-align: right; font-size: 24px; color: #ffffff">
               <i class="el-icon-star-on"></i>
-              11111
+              {{ userName }}
             </div>
           </el-col>
         </el-row>
@@ -138,6 +138,7 @@ export default {
     return {
       alldata: [],
       alltotal: 0,
+      userName: '',
       selectDateValue: '',
       pickerOptions1: {
           shortcuts: [{
@@ -358,6 +359,7 @@ CREATE TABLE `feedback` (
           console.log(result);
           if (result.total > 0) {
             _this.dialogLoginVisible = false;
+            _this.userName = result.data.userName;
           } else {
 
           }
