@@ -189,6 +189,29 @@ helpModel.prototype.queryFeedbackV2 = function(exportFlag, date1, date2, pageSiz
   });
 }
 
+helpModel.prototype.markExportFlag = function(idList, callback) {
+
+  var sqltext = "update feedback set hasExport=1 where id in (";
+  for (var i in idList) {
+    if (i == 0)
+      sqltext += "\'";
+    else 
+    sqltext += ",\'";
+    sqltext += idList[i];
+    sqltext += "\'";
+  }
+  sqltext += ");";
+
+  console.log("sqltext = " + sqltext);
+
+  db.conn.query(sqltext, [], function(err, result) {
+    if(err) {
+      return callback(err);
+    }
+    callback(null, result);
+  });
+}
+
 helpModel.prototype.login = function(username, password, callback) {
   var sqltext = 'SELECT * FROM users where userName="' + username + '" and password="' + password + '";';
   db.conn.query(sqltext, [], function(err, result) {

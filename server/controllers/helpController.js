@@ -195,10 +195,12 @@ exports.updateIssue = function (req, res, next) {
 
   exports.exportFeedbackV2 = function (req, res, next) {
     console.log('exportFeedbackV2 = ' + JSON.stringify(req.body));
-    let date1 = validator.trim(req.query.date1);console.log("aaaaaaaa");
-    let date2 = validator.trim(req.query.date2);console.log("bbbbbbb");
-    let pageSize = validator.trim(req.query.pageSize);console.log("ccccccccc");
-    let pageNum = validator.trim(req.query.pageNum);console.log("dddddddddd");
+    let date1 = validator.trim(req.query.date1);
+    let date2 = validator.trim(req.query.date2);
+    let pageSize = validator.trim(req.query.pageSize);
+    let pageNum = validator.trim(req.query.pageNum);
+    let filter = validator.trim(req.query.filter);
+    let expIdList = new Array();                            // 导出的问题的ID列表
 
     helpModel.queryFeedbackV2(true, date1, date2, pageSize, pageNum, function(err, result) {
         if(err){
@@ -212,26 +214,62 @@ exports.updateIssue = function (req, res, next) {
         });
         res.write('\xEF\xBB\xBF', 'binary');
         res.write('日期,问题编号,机芯,机型,MAC,激活ID,问题类型,问题描述,图片地址,联系方式,是否已导出\n');
+
+        var checkCondition;
+        if (filter == "exist") {
+          checkCondition = function(contact) {
+            if (contact != null && contact != "")
+              return true;
+            else
+              return false;
+          };
+        }
+        else if (filter == "none") {
+          checkCondition = function(contact) {
+            if (contact == null && contact == "")
+              return true;
+            else
+              return false;
+          };
+        } 
+        else {
+          checkCondition = function(contact) {
+            return true;
+          };
+        }
+
         for (var i in result)
         {
           var curItem = result[i];
-          var arr = curItem.optTime.split(" ");
-          var curDate = arr[0];
-          res.write('' + curDate + ',');
-          res.write('' + curItem.id + ',');
-          res.write('' + curItem.chip + ',');
-          res.write('' + curItem.model + ',');
-          res.write('' + curItem.mac + ',');
-          res.write('' + curItem.activeid + ',');
-          res.write('' + curItem.category + ',');
-          res.write('' + curItem.title + ' - ' + curItem.content + ',');
-          res.write('' + curItem.picurl + ',');
-          res.write('' + curItem.contact + ',');
-          if (curItem.hasExport == 0)
-            res.write('否\n');
-          else
-            res.write('是\n');
+          if (checkCondition(curItem.contact))
+          {
+            var arr = curItem.optTime.split(" ");
+            var curDate = arr[0];
+            res.write('' + curDate + ',');
+            res.write('' + curItem.id + ',');
+            res.write('' + curItem.chip + ',');
+            res.write('' + curItem.model + ',');
+            res.write('' + curItem.mac + ',');
+            res.write('' + curItem.activeid + ',');
+            res.write('' + curItem.category + ',');
+            res.write('' + curItem.title + ' - ' + curItem.content + ',');
+            res.write('' + curItem.picurl + ',');
+            res.write('' + curItem.contact + ',');
+            if (curItem.hasExport == 0)
+              res.write('否\n');
+            else
+              res.write('是\n');
+
+            var curidx = expIdList.length;
+            expIdList[curidx] = curItem.id;         // 把导出的问题的ID值加入列表中
+          }
         }
+        
+        // 将已经导出的问题，标记为已导出的标志。
+        helpModel.markExportFlag(expIdList, function(err, result) {
+
+        });
+
         res.end();
 
         //return res.json({"errcode": 0, "total": result.length, "data": result});
