@@ -142,6 +142,8 @@ export default {
     return {
       alldata: [],
       alltotal: 0,
+      filterdata: [],
+      filtertotal: 0,
 
       userNameShow: '',
       hasLogin: false,
@@ -249,8 +251,9 @@ export default {
           if (result && result.data) {
             _this.alltotal = result.total;
             _this.alldata = result.data;
+            _this.doFilterData();                       // 过滤电话号码
             // 更新页码条
-            _this.pageTotal = result.total;
+            _this.pageTotal = _this.filtertotal;
             _this.currentPage = 1;
             // 更新数据显示
             _this.refreshTableShow();
@@ -293,6 +296,59 @@ export default {
       this.downloadUrl("http://localhost:3010/help/exportFeedbackV2?date1=" + date_1 + "&date2=" + date_2 + "&pageSize=1&pageNum=1");
     },
 
+    doFilterData() {        // 根据是否有电话号码,过滤数据
+      var j;
+      var checkfunction;
+      this.filterdata = [];
+      this.filtertotal = 0;
+
+      //filterType: "all",                                // 表示电话过滤器 all=所有,exist表示有电话的,none表示无电话的
+      if (this.filterType == "exist") {
+        checkfunction = function(contact) {
+          if (contact != null && contact != "")
+            return true;
+          else
+            return false;
+        };
+      } 
+      else if (this.filterType == "none") {
+        checkfunction = function(contact) {
+          if (contact == null || contact == "")
+            return true;
+          else
+            return false;
+        };
+      }
+      else {
+        checkfunction = function(contact) {
+          return true;
+        }
+      }
+
+      for (var i in this.alldata) 
+      {
+        if (checkfunction(this.alldata[i].contact))
+        {
+          j =  this.filtertotal;
+          this.filtertotal ++;
+          var curdata = new Object;
+          curdata.id = this.alldata[i].id;
+          curdata.chip = this.alldata[i].chip;
+          curdata.model = this.alldata[i].model;
+          curdata.mac = this.alldata[i].mac;
+          curdata.activeid = this.alldata[i].activeid;
+          curdata.category = this.alldata[i].category;
+          curdata.title = this.alldata[i].title;
+          curdata.content = this.alldata[i].content;
+          curdata.contact = this.alldata[i].contact;
+          curdata.picurl = this.alldata[i].picurl;
+          curdata.optTime = this.alldata[i].optTime;
+          curdata.hasExport = this.alldata[i].hasExport;
+          this.filterdata[j] = curdata;
+        }
+      }
+    },
+
     refreshTableShow() {
       console.log("refreshTableShow");
       this.tableData = [];
@@ -302,41 +358,41 @@ export default {
       for (var i = 0; i < this.currentpageSize ; i++) 
       {
         var startIdx = this.currentpageSize * curPage;
-        if (startIdx + i < this.alltotal)
+        if (startIdx + i < this.filtertotal)
         {
           var newData = new Object;
-          newData.id = this.alldata[startIdx + i].id;
-          newData.chip = this.alldata[startIdx + i].chip;
-          newData.model = this.alldata[startIdx + i].model;
-          newData.mac = this.alldata[startIdx + i].mac;
-          newData.activeid = this.alldata[startIdx + i].activeid;
-          newData.category = this.alldata[startIdx + i].category;
-          newData.contact = this.alldata[startIdx + i].contact;
-          var arr = this.alldata[startIdx + i].optTime.split(" ");
+          newData.id = this.filterdata[startIdx + i].id;
+          newData.chip = this.filterdata[startIdx + i].chip;
+          newData.model = this.filterdata[startIdx + i].model;
+          newData.mac = this.filterdata[startIdx + i].mac;
+          newData.activeid = this.filterdata[startIdx + i].activeid;
+          newData.category = this.filterdata[startIdx + i].category;
+          newData.contact = this.filterdata[startIdx + i].contact;
+          var arr = this.filterdata[startIdx + i].optTime.split(" ");
           newData.date = arr[0];
-          if (this.alldata[startIdx + i].hasExport == 0)
+          if (this.filterdata[startIdx + i].hasExport == 0)
             newData.hasExport = "否";
           else
             newData.hasExport = "是";
 
           var contentText;
           var titleNull = false, contentNull = false;
-          if (this.alldata[startIdx + i].title == null || this.alldata[startIdx + i].title == "")
+          if (this.filterdata[startIdx + i].title == null || this.filterdata[startIdx + i].title == "")
             titleNull = true;
-          if (this.alldata[startIdx + i].content == null || this.alldata[startIdx + i].content == "")
+          if (this.filterdata[startIdx + i].content == null || this.filterdata[startIdx + i].content == "")
             contentNull = true;
           if (titleNull && contentNull)
             contentText = "";
           else if (titleNull)
-            contentText = this.alldata[startIdx + i].content;
+            contentText = this.filterdata[startIdx + i].content;
           else if (contentNull)
-            contentText = this.alldata[startIdx + i].title;
+            contentText = this.filterdata[startIdx + i].title;
           else
-            contentText = this.alldata[startIdx + i].title + " - " + this.alldata[startIdx + i].content;
+            contentText = this.filterdata[startIdx + i].title + " - " + this.filterdata[startIdx + i].content;
           newData.desc = contentText;
 
-          if (this.alldata[startIdx + i].picurl != null  &&  this.alldata[startIdx + i].picurl != "")
-            newData.picList = this.alldata[startIdx + i].picurl;
+          if (this.filterdata[startIdx + i].picurl != null  &&  this.filterdata[startIdx + i].picurl != "")
+            newData.picList = this.filterdata[startIdx + i].picurl;
           this.tableData[i] = newData;
           /*
           tableData : [
@@ -402,7 +458,11 @@ CREATE TABLE `feedback` (
 
     phoneFilterChangeMethod(type) {
       console.log(" phoneFilterChange() type = " + type);
-
+      this.filterType = type;
+      this.doFilterData();
+      this.pageTotal = this.filtertotal;
+      // 更新数据显示
+      this.refreshTableShow();
     },
 
     contactRenderHeader(h, {column}) { // h即为cerateElement的简写，具体可看vue官方文档
