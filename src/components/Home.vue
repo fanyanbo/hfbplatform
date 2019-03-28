@@ -83,7 +83,7 @@
                 </el-popover>
               </template>
             </el-table-column>
-            <el-table-column prop="contact" label="联系方式"  width="150">
+            <el-table-column prop="contact" label="联系方式" width="150" :render-header="contactRenderHeader">
             </el-table-column>
             <el-table-column prop="hasExport" label="已导出" width="70">
             </el-table-column>
@@ -131,9 +131,13 @@
 <script>
 
 import API from '../api/api_feedback';
+//import phonefilter from './phonefilter';
+
+
 
 export default {
   name: 'Home',
+
   data () {
     return {
       alldata: [],
@@ -175,6 +179,7 @@ export default {
       pageTotal: 1000,
       pageSizeSelector: [10, 20, 50, 100, 150],
       currentpageSize: 10,
+      filterType: "all",                                // 表示电话过滤器 all=所有,exist表示有电话的,none表示无电话的
 
       tableData : [],
 
@@ -393,8 +398,24 @@ CREATE TABLE `feedback` (
         }
       );
       
-    }
+    }, 
 
+    phoneFilterChangeMethod(type) {
+      console.log(" phoneFilterChange() type = " + type);
+
+    },
+
+    contactRenderHeader(h, {column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        return h(
+          'span',
+          [ 
+            h('span', column.label),
+            h('phonefilter', {
+              props: {phoneFilterChangeMethod: this.phoneFilterChangeMethod}
+            })
+          ]
+        );
+       }
   }
 }
 
