@@ -287,13 +287,14 @@ export default {
       }
       var date_1 = this.selectDateValue[0];
       var date_2 = this.selectDateValue[1];
+      var filter = this.filterType;
       let params = {
         date1: date_1,
         date2: date_2,
         pageSize: "1",
         pageNum: "1"
       };
-      this.downloadUrl("http://localhost:3010/help/exportFeedbackV2?date1=" + date_1 + "&date2=" + date_2 + "&pageSize=1&pageNum=1");
+      this.downloadUrl("http://localhost:3010/help/exportFeedbackV2?date1=" + date_1 + "&date2=" + date_2 + "&pageSize=1&pageNum=1&filter=" + filter);
     },
 
     doFilterData() {        // 根据是否有电话号码,过滤数据
