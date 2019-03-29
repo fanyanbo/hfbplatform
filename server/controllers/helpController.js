@@ -132,7 +132,7 @@ exports.updateIssue = function (req, res, next) {
             console.log('error ' + err);
             return res.json({"errcode": 40002, "errmsg": "解析发生错误"});
         }
-        let filename = files.file.name
+        let filename = files.file.name;
         let nameArray = filename.split('.');
         let type = nameArray[nameArray.length - 1];
         let name = '';
@@ -164,7 +164,7 @@ exports.updateIssue = function (req, res, next) {
     form.on('error', function(err) {
         console.log('onError err = ' + err);
         return res.json({"errcode": 40002, "errmsg": "监听发生错误"});
-    }); 
+    });
   };
 
   exports.queryFeedback = function (req, res, next) {
@@ -180,15 +180,16 @@ exports.updateIssue = function (req, res, next) {
   exports.queryFeedbackV2 = function (req, res, next) {
 
     console.log('queryFeedbackV2 = ' + JSON.stringify(req.body));
-    let date1 = validator.trim(req.body.date1);console.log("aaaaaaaa");
-    let date2 = validator.trim(req.body.date2);console.log("bbbbbbb");
-    let pageSize = validator.trim(req.body.pageSize);console.log("ccccccccc");
-    let pageNum = validator.trim(req.body.pageNum);console.log("dddddddddd");
+    let date1 = validator.trim(req.body.date1);
+    let date2 = validator.trim(req.body.date2);
+    let pageSize = validator.trim(req.body.pageSize);
+    let pageNum = validator.trim(req.body.pageNum);
 
     helpModel.queryFeedbackV2(false, date1, date2, pageSize, pageNum, function(err, result) {
         if(err){
           return res.json({"errcode": 40005, "errmsg": err});
         }
+        console.log(result);
         return res.json({"errcode": 0, "total": result.length, "data": result});
       });
   };
@@ -264,7 +265,7 @@ exports.updateIssue = function (req, res, next) {
             expIdList[curidx] = curItem.id;         // 把导出的问题的ID值加入列表中
           }
         }
-        
+
         // 将已经导出的问题，标记为已导出的标志。
         helpModel.markExportFlag(expIdList, function(err, result) {
 

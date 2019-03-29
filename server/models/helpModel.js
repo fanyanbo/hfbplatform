@@ -143,6 +143,54 @@ helpModel.prototype.queryFeedback = function(callback) {
   });
 }
 
+function checkRecordExist(arr, item)
+{
+  for (var j in arr) {
+    if (arr[j].chip == item.chip &&
+      arr[j].model == item.model &&
+      arr[j].mac == item.mac &&
+      arr[j].activeid == item.activeid &&
+      arr[j].category == item.category &&
+      arr[j].title == item.title &&
+      arr[j].content == item.content &&
+      arr[j].contact == item.contact
+      )
+      return j;
+  }
+  return -1;
+}
+
+// 合并查询结果(因为前端在传输图片的时候，一条记录包含多张图片时，会生成多条数据库记录，该函数把多图片的记录，合并成一条记录包含多张图片)
+function uniteQueryResult(oldResult) {
+  var newResult = new Array();
+  for (var i in oldResult) 
+  {
+    var item = oldResult[i];
+    var idx = checkRecordExist(newResult, item);
+    if (idx < 0) {
+      var newobj = new Object;
+      newobj.id = item.id;
+      newobj.chip = item.chip;
+      newobj.model = item.model;
+      newobj.mac = item.mac;
+      newobj.activeid = item.activeid;
+      newobj.category = item.category;
+      newobj.title = item.title;
+      newobj.content = item.content;
+      newobj.contact = item.contact;
+      newobj.picurl = item.picurl;
+      newobj.optTime = item.optTime;
+      newobj.hasExport = item.hasExport;
+      var curidx = newResult.length;
+      newResult[curidx] = newobj;
+    }
+    else {
+      newResult[idx].picurl += ";" + item.picurl;
+    }
+  }
+  return newResult;
+}
+
 helpModel.prototype.queryFeedbackV2 = function(exportFlag, date1, date2, pageSize, pageNum, callback) {
 
   var sqltext = "";
@@ -185,7 +233,8 @@ helpModel.prototype.queryFeedbackV2 = function(exportFlag, date1, date2, pageSiz
       if(err) {
         return callback(err);
       }
-      callback(null, result);
+      var newResult = uniteQueryResult(result);       // 合并多图片记录
+      callback(null, newResult);
   });
 }
 

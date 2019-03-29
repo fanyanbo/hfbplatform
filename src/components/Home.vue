@@ -45,8 +45,10 @@
               <el-col :span="12">
                 <div style="text-align: right">
                   <span>
-                    <el-button type="primary" size="medium" icon="el-icon-refresh">刷新</el-button>
-                    <el-button type="primary" size="medium" icon="el-icon-document" @click="exportTable">导出</el-button>
+                    <el-button type="primary" size="medium" icon="el-icon-refresh" 
+                      @click="refreshTable" :disabled="refreshButtonDisable">刷新</el-button>
+                    <el-button type="primary" size="medium" icon="el-icon-document" 
+                      @click="exportTable" :disabled="refreshButtonDisable">导出</el-button>
                   </span>
                 </div>
               </el-col>
@@ -74,13 +76,16 @@
             </el-table-column>
             <el-table-column prop="picList" label="图片" width="150">
               <template slot-scope="scope">
-                <el-popover
+                <span v-for="item in scope.row.picList" style="margin-right: 3px;">
+                <el-popover 
                   placement="right"
                   title=""
                   trigger="hover" >
-                  <img :src="scope.row.picList" style="max-width: 800px; max-height: 600px" />
-                  <img slot="reference" :src="scope.row.picList" :alt="scope.row.picList" style="width: 50px; height: 50px">
+                  <img :src="item" style="max-width: 800px; max-height: 600px" />
+                  <img slot="reference" :src="item" :alt="item" style="width: 50px; height: 50px">
                 </el-popover>
+                </span>
+                
               </template>
             </el-table-column>
             <el-table-column prop="contact" label="联系方式" width="150" :render-header="contactRenderHeader">
@@ -147,6 +152,9 @@ export default {
 
       userNameShow: '',
       hasLogin: false,
+
+      refreshButtonDisable: true,
+      exportButtonDisable: true,
 
       selectDateValue: '',
       pickerOptions1: {
@@ -231,6 +239,8 @@ export default {
     selectDateValueChange() {
       if (this.hasLogin) {
         console.log(this.selectDateValue);
+        this.refreshButtonDisable = false;
+        this.exportButtonDisable = false;
         this.getFeedbackData(this.selectDateValue[0], this.selectDateValue[1]);
       } else {
         console.log("not login");
@@ -277,6 +287,10 @@ export default {
         document.body.removeChild(iframe);
       }
       document.body.appendChild(iframe);
+    },
+
+    refreshTable() {
+      this.selectDateValueChange();
     },
 
     exportTable() {
@@ -393,7 +407,13 @@ export default {
           newData.desc = contentText;
 
           if (this.filterdata[startIdx + i].picurl != null  &&  this.filterdata[startIdx + i].picurl != "")
-            newData.picList = this.filterdata[startIdx + i].picurl;
+          {
+            var arr2 = this.filterdata[startIdx + i].picurl.split(";");
+            newData.picList = arr2;
+          }
+          else {
+            newData.picList = new Array();
+          }
           this.tableData[i] = newData;
           /*
           tableData : [
