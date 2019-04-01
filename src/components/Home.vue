@@ -226,12 +226,43 @@ export default {
       let _this = this;
       if (!this.hasLogin)       // 没有登录的话，弹出登录框
       {
-        this.dialogLoginVisible = true;
-        setTimeout(function() {
-          _this.checkLogin();
-        }, 2000);
+        // 检查是否登录
+        let params = {};
+        API.checkLogin(params).then(
+          function (result) {
+            console.log(result);
+            if (result.isLogined == "true") {
+              _this.userNameShow = result.userName;
+              console.log(_this.userNameShow);
+              _this.hasLogin = true;
+              _this.dialogLoginVisible = false;
+            }
+            else {
+              _this.dialogLoginVisible = true;
+              setTimeout(function() {
+                _this.checkLogin();
+              }, 2000);
+            }
+          }, 
+          function (err) {
+            console.log(err);
+            _this.dialogLoginVisible = true;
+            setTimeout(function() {
+              _this.checkLogin();
+            }, 2000);
+          }
+        ).catch(
+          function (error) {
+            console.log(error);
+            _this.dialogLoginVisible = true;
+            setTimeout(function() {
+              _this.checkLogin();
+            }, 2000);
+          }
+        );
       }
     },
+
     startupGetData() {
       
     },
@@ -308,7 +339,12 @@ export default {
         pageSize: "1",
         pageNum: "1"
       };
-      this.downloadUrl("http://localhost:3010/help/exportFeedbackV2?date1=" + date_1 + "&date2=" + date_2 + "&pageSize=1&pageNum=1&filter=" + filter);
+      var base;
+      if (process.env.NODE_ENV === 'development')
+        base = 'http://localhost:3010';
+      else
+        base = 'https://webx.coocaa.com/hfdplatform';
+      this.downloadUrl(base + "/help/exportFeedbackV2?date1=" + date_1 + "&date2=" + date_2 + "&pageSize=1&pageNum=1&filter=" + filter);
     },
 
     doFilterData() {        // 根据是否有电话号码,过滤数据
@@ -457,12 +493,13 @@ CREATE TABLE `feedback` (
       API.login(params).then(
         function (result) {
           console.log(result);
-          if (result.total > 0) {
-            _this.userNameShow = result.data[0].userName;
+          if (result.errcode == 0) {          // 存在并有效用户
+            _this.userNameShow = result.userName;
             console.log(_this.userNameShow);
             _this.hasLogin = true;
             _this.dialogLoginVisible = false;
-          } else {
+          }
+          else {
 
           }
         }, 

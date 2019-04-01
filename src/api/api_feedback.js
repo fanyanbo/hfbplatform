@@ -98,4 +98,8 @@ export default {
     return API.POST('/help/login', params);
   },
 
+  checkLogin: params => {
+    return API.POST('/help/checkLogin', params);
+  },
+
 }
