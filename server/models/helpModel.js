@@ -262,7 +262,7 @@ helpModel.prototype.markExportFlag = function(idList, callback) {
 }
 
 helpModel.prototype.login = function(username, password, callback) {
-  var sqltext = 'SELECT * FROM users where userName="' + username + '" and password="' + password + '";';
+  var sqltext = 'SELECT userName,email FROM users where userName="' + username + '" and password="' + password + '";';
   db.conn.query(sqltext, [], function(err, result) {
     if(err) {
       return callback(err);

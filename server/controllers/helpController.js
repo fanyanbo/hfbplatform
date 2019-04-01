@@ -280,15 +280,49 @@ exports.updateIssue = function (req, res, next) {
   exports.login = function (req, res, next) {
 
     console.log('login = ' + JSON.stringify(req.body));
-    let username = validator.trim(req.body.username);console.log("aaaaaaaa");
-    let password = validator.trim(req.body.password);console.log("bbbbbbb");
+    let username = validator.trim(req.body.username);
+    let password = validator.trim(req.body.password);
 
     helpModel.login(username, password, function(err, result) {
         if(err){
           return res.json({"errcode": 40005, "errmsg": err});
         }
-        return res.json({"errcode": 0, "total": result.length, "data": result});
+
+        var hasUser = false;
+        var userName = "";
+        var email = "";
+        for (var i in result) {
+          hasUser = true;
+          userName = result[i].userName;
+          break;
+        }
+
+        if (hasUser) {
+
+          req.session.regenerate(function(err) {
+            if(err){
+              return res.json({"errcode": 40005, "errmsg": "req.session.regenerate fail."});     
+            }
+            req.session.userName = userName;
+            req.session.email = email;
+            return res.json({"errcode": 0, "userName": userName, "email": email});
+          });
+        }
+        else {
+          return res.json({"errcode": 40005, "errmsg": "cannot find user."});
+        }
       });
   };
 
+  exports.checkLogin = function (req, res, next) {
+    var loginUser = req.session.userName;
+    console.log('checkLogin() loginUser = ' + loginUser);
+    var isLogined = !!loginUser;
+    if (isLogined) {
+      return res.json({"isLogined": "true", "userName": loginUser});
+    }
+    else {
+      return res.json({"isLogined": "false"});
+    }
+  }
 

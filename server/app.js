@@ -4,6 +4,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 // var logger = require('morgan');
 var logger = require('./common/logger');
+var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
@@ -55,6 +56,15 @@ app.use(cors({
     methods:['GET','POST'],
     alloweHeaders:['Conten-Type','Authorization','Content-Length', 'Accept,X-Requested-With'],
     credentials:true
+}));
+
+// session 管理
+app.use(session({
+  name: "helpsyssid",
+  secret: "B68CC72164659031",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {maxAge: 24*60*60*1000}       // 1 day
 }));
 
 // app.use('/', index);

@@ -34,5 +34,6 @@ router.post('/addIssue',helpController.addIssue);
 router.post('/updateIssue',helpController.updateIssue);
 router.post('/queryIssue',helpController.queryIssue);
 router.post('/login',helpController.login);
+router.post('/checkLogin',helpController.checkLogin);
 
 module.exports = router;
