@@ -153,7 +153,11 @@ function checkRecordExist(arr, item)
       arr[j].category == item.category &&
       arr[j].title == item.title &&
       arr[j].content == item.content &&
-      arr[j].contact == item.contact
+      arr[j].contact == item.contact && 
+      arr[j].picurl != null && 
+      arr[j].picurl != "" && 
+      item.picurl != null && 
+      item.picurl != "" 
       )
       return j;
   }
