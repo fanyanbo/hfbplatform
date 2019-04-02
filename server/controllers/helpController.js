@@ -194,6 +194,10 @@ exports.updateIssue = function (req, res, next) {
       });
   };
 
+  exports.escapeStringForCSV = function(str) {
+
+  }
+
   exports.exportFeedbackV2 = function (req, res, next) {
     console.log('exportFeedbackV2 = ' + JSON.stringify(req.body));
     let date1 = validator.trim(req.query.date1);

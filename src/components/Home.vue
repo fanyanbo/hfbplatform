@@ -1,5 +1,5 @@
 <template>
-    <el-container style="border: 1px solid">
+    <el-container style="width: 100%; top: 0px; bottom: 0px; border: 0px; padding: 0px">
       <el-header>
         <el-row>
           <el-col :span="12">
@@ -57,7 +57,7 @@
         </div>
 
         <div style="margin-top:5px">
-          <el-table :data="tableData" height="500" border style="width: 100%">
+          <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="date" label="日期" width="100">
             </el-table-column>
             <el-table-column prop="id" label="问题编号" width="80">
@@ -545,13 +545,12 @@ CREATE TABLE `feedback` (
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .el-header {
-    background-color: #B3C0D1;
+    background-color: #373d41;
     color: #333;
     text-align: center;
     line-height: 60px;
   }
   .el-main {
-    background-color: #E9EEF3;
     color: #333;
     text-align: center;
   }
