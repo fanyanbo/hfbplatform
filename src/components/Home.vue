@@ -74,7 +74,7 @@
             </el-table-column>
             <el-table-column prop="desc" label="问题描述">
             </el-table-column>
-            <el-table-column prop="picList" label="图片" width="150">
+            <el-table-column prop="picList" label="图片" width="160">
               <template slot-scope="scope">
                 <span v-for="item in scope.row.picList" style="margin-right: 3px;">
                 <el-popover 
@@ -82,7 +82,7 @@
                   title=""
                   trigger="hover" >
                   <img :src="item" style="max-width: 800px; max-height: 600px" />
-                  <img slot="reference" :src="item" :alt="item" style="width: 50px; height: 50px">
+                  <img slot="reference" :src="item" :alt="item" style="width: 40px; height: 40px">
                 </el-popover>
                 </span>
                 
