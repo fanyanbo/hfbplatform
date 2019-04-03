@@ -99,7 +99,6 @@
           <el-row>
             <el-col :span="24">
               <div style="text-align: right">
-
                   <el-pagination 
                     background
                     layout="total, sizes, prev, pager, next, jumper"
@@ -116,7 +115,7 @@
           </el-row>
         </div>
 
-        <el-dialog title="学习与反馈平台v2.0" :visible.sync="dialogLoginVisible"> 
+        <el-dialog title="学习与反馈平台v2.0" :visible.sync="dialogLoginVisible">
           <el-form :model="form">
             <el-form-item label="账户" :label-width="formLabelWidth">
               <el-input v-model="form.username" autocomplete="off"></el-input>
@@ -189,7 +188,7 @@ export default {
       pageTotal: 1000,
       pageSizeSelector: [10, 20, 50, 100, 150],
       currentpageSize: 10,
-      filterType: "all",                                // 表示电话过滤器 all=所有,exist表示有电话的,none表示无电话的
+      filterType: "all",                                // 表示电话过滤器 all为所有,exist表示有电话的,none表示无电话的
 
       tableData : [],
 

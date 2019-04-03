@@ -231,7 +231,7 @@ exports.updateIssue = function (req, res, next) {
         }
         else if (filter == "none") {
           checkCondition = function(contact) {
-            if (contact == null && contact == "")
+            if (contact == null || contact == "")
               return true;
             else
               return false;
