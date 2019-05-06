@@ -194,8 +194,33 @@ exports.updateIssue = function (req, res, next) {
       });
   };
 
-  exports.escapeStringForCSV = function(str) {
+  function escapeStringForCSV(oldString)
+  {
+    if (oldString.indexOf('\"') >= 0)
+    {
+      var i;
+      var newstr = '';
+      
+      for (i=0; i < oldString.length; i++) {
+        var ch = oldString.charAt(i);
+        if (ch == "\"")
+          newstr += '\"\"';
+        else
+          newstr += ch;
+      }
 
+      return '\"' + newstr + '\"';
+    }
+    else if (oldString.indexOf(',') >= 0)
+    {
+      return '\"' + oldString + '\"';
+    }
+    else if (oldString.indexOf('\r\n') >= 0)
+    {
+      return '\"' + oldString + '\"';
+    }
+    else
+      return oldString;
   }
 
   exports.exportFeedbackV2 = function (req, res, next) {
@@ -250,16 +275,16 @@ exports.updateIssue = function (req, res, next) {
           {
             var arr = curItem.optTime.split(" ");
             var curDate = arr[0];
-            res.write('' + curDate + ',');
-            res.write('' + curItem.id + ',');
-            res.write('' + curItem.chip + ',');
-            res.write('' + curItem.model + ',');
-            res.write('' + curItem.mac + ',');
-            res.write('' + curItem.activeid + ',');
-            res.write('' + curItem.category + ',');
-            res.write('' + curItem.title + ' - ' + curItem.content + ',');
-            res.write('' + curItem.picurl + ',');
-            res.write('' + curItem.contact + ',');
+            res.write(escapeStringForCSV('' + curDate) + ',');
+            res.write(escapeStringForCSV('' + curItem.id) + ',');
+            res.write(escapeStringForCSV('' + curItem.chip) + ',');
+            res.write(escapeStringForCSV('' + curItem.model) + ',');
+            res.write(escapeStringForCSV('' + curItem.mac) + ',');
+            res.write(escapeStringForCSV('' + curItem.activeid) + ',');
+            res.write(escapeStringForCSV('' + curItem.category) + ',');
+            res.write(escapeStringForCSV('' + curItem.title + ' - ' + curItem.content) + ',');
+            res.write(escapeStringForCSV('' + curItem.picurl) + ',');
+            res.write(escapeStringForCSV('' + curItem.contact) + ',');
             if (curItem.hasExport == 0)
               res.write('否\n');
             else

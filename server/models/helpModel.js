@@ -165,7 +165,7 @@ function checkRecordExist(arr, item)
 }
 
 // 合并查询结果(因为前端在传输图片的时候，一条记录包含多张图片时，会生成多条数据库记录，该函数把多图片的记录，合并成一条记录包含多张图片)
-function uniteQueryResult(oldResult) {
+function uniteQueryResult(exportFlag, oldResult) {
   var newResult = new Array();
   for (var i in oldResult) 
   {
@@ -189,9 +189,13 @@ function uniteQueryResult(oldResult) {
       newResult[curidx] = newobj;
     }
     else {
-      newResult[idx].picurl += ";" + item.picurl;
+      if (exportFlag)
+        newResult[idx].picurl += "\r\n" + item.picurl;
+      else
+        newResult[idx].picurl += ";" + item.picurl;
     }
   }
+
   return newResult;
 }
 
@@ -237,7 +241,7 @@ helpModel.prototype.queryFeedbackV2 = function(exportFlag, date1, date2, pageSiz
       if(err) {
         return callback(err);
       }
-      var newResult = uniteQueryResult(result);       // 合并多图片记录
+      var newResult = uniteQueryResult(exportFlag, result);       // 合并多图片记录
       callback(null, newResult);
   });
 }
