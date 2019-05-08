@@ -164,6 +164,60 @@ function checkRecordExist(arr, item)
   return -1;
 }
 
+// 只查询记录里面是否与最后一条相同
+function checkRecordExist2(arr, item)
+{
+  if (arr.length == 0)
+    return -1;
+  
+  var lastidx = arr.length - 1;
+
+  if (arr[lastidx].chip == item.chip &&
+    arr[lastidx].model == item.model &&
+    arr[lastidx].mac == item.mac &&
+    arr[lastidx].activeid == item.activeid &&
+    arr[lastidx].category == item.category &&
+    arr[lastidx].title == item.title &&
+    arr[lastidx].content == item.content &&
+    arr[lastidx].contact == item.contact &&
+    arr[lastidx].picurl == item.picurl
+    )
+    return lastidx;
+
+  return -1;
+}
+
+// 合并查询结果，有时用户会重复提交同一条问题，所以需要过滤一下重复提交的问题。
+function uniteSameResult(exportFlag, oldResult) {
+  var newResult = new Array();
+  for (var i in oldResult) 
+  {
+    var item = oldResult[i];
+    var idx = checkRecordExist2(newResult, item);
+    if (idx < 0) {
+      var newobj = new Object;
+      newobj.id = item.id;
+      newobj.chip = item.chip;
+      newobj.model = item.model;
+      newobj.mac = item.mac;
+      newobj.activeid = item.activeid;
+      newobj.category = item.category;
+      newobj.title = item.title;
+      newobj.content = item.content;
+      newobj.contact = item.contact;
+      newobj.picurl = item.picurl;
+      newobj.optTime = item.optTime;
+      newobj.hasExport = item.hasExport;
+      var curidx = newResult.length;
+      newResult[curidx] = newobj;
+    }
+    else {
+    }
+  }
+
+  return newResult;
+}
+
 // 合并查询结果(因为前端在传输图片的时候，一条记录包含多张图片时，会生成多条数据库记录，该函数把多图片的记录，合并成一条记录包含多张图片)
 function uniteQueryResult(exportFlag, oldResult) {
   var newResult = new Array();
@@ -241,8 +295,9 @@ helpModel.prototype.queryFeedbackV2 = function(exportFlag, date1, date2, pageSiz
       if(err) {
         return callback(err);
       }
-      var newResult = uniteQueryResult(exportFlag, result);       // 合并多图片记录
-      callback(null, newResult);
+      var newResult1 = uniteSameResult(exportFlag, result);           // 合并重复记录（有时有些用户会重复提交几条相同的记录 ）
+      var newResult2 = uniteQueryResult(exportFlag, newResult1);      // 合并多图片记录
+      callback(null, newResult2);
   });
 }
 
