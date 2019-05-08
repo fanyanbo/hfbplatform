@@ -189,7 +189,7 @@ exports.updateIssue = function (req, res, next) {
         if(err){
           return res.json({"errcode": 40005, "errmsg": err});
         }
-        console.log(result);
+        //console.log(result);
         return res.json({"errcode": 0, "total": result.length, "data": result});
       });
   };
