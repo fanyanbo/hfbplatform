@@ -60,15 +60,17 @@
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="date" label="日期" width="100">
             </el-table-column>
-            <el-table-column prop="id" label="问题编号" width="80">
+            <el-table-column prop="id" label="问题编号" width="78">
             </el-table-column>
-            <el-table-column prop="chip" label="机芯" width="70">
+            <el-table-column prop="chip" label="机芯" width="66">
             </el-table-column>
-            <el-table-column prop="model" label="机型" width="70">
+            <el-table-column prop="model" label="机型" width="66">
             </el-table-column>
             <el-table-column prop="mac" label="MAC" width="120">
             </el-table-column>
-            <el-table-column prop="activeid" label="激活ID" width="100">
+            <el-table-column prop="activeid" label="激活ID" width="92">
+            </el-table-column>
+            <el-table-column prop="sysVersion" label="系统版本" width="100">
             </el-table-column>
             <el-table-column prop="category" label="问题类型" width="100">
             </el-table-column>
@@ -387,6 +389,7 @@ export default {
           curdata.model = this.alldata[i].model;
           curdata.mac = this.alldata[i].mac;
           curdata.activeid = this.alldata[i].activeid;
+          curdata.sysVersion = this.alldata[i].sysVersion;
           curdata.category = this.alldata[i].category;
           curdata.title = this.alldata[i].title;
           curdata.content = this.alldata[i].content;
@@ -416,6 +419,7 @@ export default {
           newData.model = this.filterdata[startIdx + i].model;
           newData.mac = this.filterdata[startIdx + i].mac;
           newData.activeid = this.filterdata[startIdx + i].activeid;
+          newData.sysVersion = this.filterdata[startIdx + i].sysVersion;
           newData.category = this.filterdata[startIdx + i].category;
           newData.contact = this.filterdata[startIdx + i].contact;
           var arr = this.filterdata[startIdx + i].optTime.split(" ");
