@@ -91,12 +91,13 @@ exports.updateIssue = function (req, res, next) {
     let model = validator.trim(req.body.model);
     let mac = validator.trim(req.body.mac);
     let activeid = validator.trim(req.body.activeid);
+    let ccosver = validator.trim(req.body.ccosver);
     let category = validator.trim(req.body.category);
     let title = validator.trim(req.body.title);
     let content = validator.trim(req.body.content);
     let contact = validator.trim(req.body.contact);
     
-    helpModel.addFeedback(chip,model,mac,activeid,category,title,content,contact,function(err, result) {
+    helpModel.addFeedback(chip,model,mac,activeid,ccosver,category,title,content,contact,function(err, result) {
         if(err) {
             return output.error(req,res,err);
         } else {
@@ -108,7 +109,7 @@ exports.updateIssue = function (req, res, next) {
 
   exports.addFeedbackExtra = function (req, res, next) {
 
-    let _chip,_model,_mac,_activeid,_category,_title,_content,_contact,_picurl;
+    let _chip,_model,_mac,_activeid,_ccosver,_category,_title,_content,_contact,_picurl;
     console.log('addFeedbackExtra = ' + JSON.stringify(req.body));
     var form = new formidable.IncomingForm();
     form.encoding = 'utf-8';
@@ -123,6 +124,7 @@ exports.updateIssue = function (req, res, next) {
         _model = fields.model;
         _mac = fields.mac;
         _activeid = fields.activeid;
+        _ccosver = fields.ccosver;
         _category = fields.category;
         _title = fields.title;
         _content = fields.content;
@@ -151,7 +153,7 @@ exports.updateIssue = function (req, res, next) {
 
         console.log(_picurl);
 
-        helpModel.addFeedbackExtra(_chip,_model,_mac,_activeid,_category,_title,_content,_contact,_picurl, function(err,result) {
+        helpModel.addFeedbackExtra(_chip,_model,_mac,_activeid,_ccosver,_category,_title,_content,_contact,_picurl, function(err,result) {
             if(err) {
               return output.error(req,res,err);
             } else {

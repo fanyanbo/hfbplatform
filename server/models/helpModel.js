@@ -107,10 +107,10 @@ helpModel.prototype.updateDiscovery = function(categoryId, titleId,likeFlag,coun
   });
 }
 
-helpModel.prototype.addFeedback = function (chip, model, mac, activeid, category, title, content, contact, callback) {
+helpModel.prototype.addFeedback = function (chip, model, mac, activeid, ccosver, category, title, content, contact, callback) {
   console.log('enter addFeedback');
-  let sql = "INSERT INTO feedback(chip, model, mac, activeid, category, title, content, contact) values (?,?,?,?,?,?,?,?)";
-  let sql_params = [chip, model, mac, activeid, category, title, content, contact];
+  let sql = "INSERT INTO feedback(chip, model, mac, activeid, sysVersion, category, title, content, contact) values (?,?,?,?,?,?,?,?,?)";
+  let sql_params = [chip, model, mac, activeid, ccosver, category, title, content, contact];
   console.log(sql_params);
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -120,9 +120,9 @@ helpModel.prototype.addFeedback = function (chip, model, mac, activeid, category
   });
 }
 
-helpModel.prototype.addFeedbackExtra = function (chip, model, mac, activeid, category, title, content, contact, picurl, callback) {
-  let sql = "INSERT INTO feedback(chip, model, mac, activeid, category, title, content, contact, picurl) values (?,?,?,?,?,?,?,?,?)";
-  let sql_params = [chip, model, mac, activeid, category, title, content, contact, picurl];
+helpModel.prototype.addFeedbackExtra = function (chip, model, mac, activeid, ccosver, category, title, content, contact, picurl, callback) {
+  let sql = "INSERT INTO feedback(chip, model, mac, activeid, sysVersion, category, title, content, contact, picurl) values (?,?,?,?,?,?,?,?,?,?)";
+  let sql_params = [chip, model, mac, activeid, ccosver, category, title, content, contact, picurl];
   console.log(sql_params);
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
