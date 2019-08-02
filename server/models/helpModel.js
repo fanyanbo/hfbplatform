@@ -150,6 +150,7 @@ function checkRecordExist(arr, item)
       arr[j].model == item.model &&
       arr[j].mac == item.mac &&
       arr[j].activeid == item.activeid &&
+      arr[j].sysVersion == item.sysVersion &&
       arr[j].category == item.category &&
       arr[j].title == item.title &&
       arr[j].content == item.content &&
@@ -176,6 +177,7 @@ function checkRecordExist2(arr, item)
     arr[lastidx].model == item.model &&
     arr[lastidx].mac == item.mac &&
     arr[lastidx].activeid == item.activeid &&
+    arr[lastidx].sysVersion == item.sysVersion &&
     arr[lastidx].category == item.category &&
     arr[lastidx].title == item.title &&
     arr[lastidx].content == item.content &&
@@ -201,6 +203,7 @@ function uniteSameResult(exportFlag, oldResult) {
       newobj.model = item.model;
       newobj.mac = item.mac;
       newobj.activeid = item.activeid;
+      newobj.sysVersion = item.sysVersion;
       newobj.category = item.category;
       newobj.title = item.title;
       newobj.content = item.content;
@@ -232,6 +235,7 @@ function uniteQueryResult(exportFlag, oldResult) {
       newobj.model = item.model;
       newobj.mac = item.mac;
       newobj.activeid = item.activeid;
+      newobj.sysVersion = item.sysVersion;
       newobj.category = item.category;
       newobj.title = item.title;
       newobj.content = item.content;

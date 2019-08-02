@@ -245,7 +245,7 @@ exports.updateIssue = function (req, res, next) {
           'Content-Disposition': 'attachment; filename=' + encodeURI(filename),   //告诉浏览器这是一个需要下载的文件
         });
         res.write('\xEF\xBB\xBF', 'binary');
-        res.write('日期,问题编号,机芯,机型,MAC,激活ID,问题类型,问题描述,图片地址,联系方式,是否已导出\n');
+        res.write('日期,问题编号,机芯,机型,MAC,激活ID,酷开版本,问题类型,问题描述,图片地址,联系方式,是否已导出\n');
 
         var checkCondition;
         if (filter == "exist") {
@@ -283,6 +283,7 @@ exports.updateIssue = function (req, res, next) {
             res.write(escapeStringForCSV('' + curItem.model) + ',');
             res.write(escapeStringForCSV('' + curItem.mac) + ',');
             res.write(escapeStringForCSV('' + curItem.activeid) + ',');
+            res.write(escapeStringForCSV('' + curItem.sysVersion) + ',');
             res.write(escapeStringForCSV('' + curItem.category) + ',');
             res.write(escapeStringForCSV('' + curItem.title + ' - ' + curItem.content) + ',');
             res.write(escapeStringForCSV('' + curItem.picurl) + ',');
