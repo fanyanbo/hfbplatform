@@ -27,6 +27,7 @@ router.post('/queryDiscovery',helpController.queryDiscovery);
 router.post('/updateDiscovery',helpController.updateDiscovery);
 router.post('/addFeedback',helpController.addFeedback);
 router.post('/addFeedbackExtra',helpController.addFeedbackExtra);
+router.post('/addFeedbackExtra2',helpController.addFeedbackExtra2);
 router.post('/queryFeedback',helpController.queryFeedback);
 router.post('/queryFeedbackV2',helpController.queryFeedbackV2);
 router.get('/exportFeedbackV2',helpController.exportFeedbackV2);

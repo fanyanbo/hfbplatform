@@ -169,6 +169,74 @@ exports.updateIssue = function (req, res, next) {
     });
   };
 
+  exports.addFeedbackExtra2 = function (req, res, next) {
+
+    let _chip,_model,_mac,_activeid,_ccosver,_category,_title,_content,_contact,_picurl;
+    console.log('addFeedbackExtra = ' + JSON.stringify(req.body));
+    var form = new formidable.IncomingForm();
+    form.encoding = 'utf-8';
+    logger.error("__dirname = " + __dirname);
+    form.uploadDir = path.join(__dirname + "/../public/upload");
+    form.keepExtensions = true;
+    form.maxFieldsSize = 10 * 1024 * 1024;
+    form.parse(req, function (err, fields, files){
+        
+      var info1 = 'fields = ' + JSON.stringify(fields);
+      var info2 = '\r\n\r\nfiles = ' + JSON.stringify(files);
+      var fs = require('fs');
+      fs.writeFile('/home/webx/text1.txt', info1 + info2);
+      /*
+        console.log(fields);
+        _chip = fields.chip;
+        _model = fields.model;
+        _mac = fields.mac;
+        _activeid = fields.activeid;
+        _ccosver = fields.ccosver;
+        _category = fields.category;
+        _title = fields.title;
+        _content = fields.content;
+        _contact = fields.contact;
+
+        if (err) {
+            console.log('error ' + err);
+            return res.json({"errcode": 40002, "errmsg": "解析发生错误"});
+        }
+        let filename = files.file.name;
+        let nameArray = filename.split('.');
+        let type = nameArray[nameArray.length - 1];
+        let name = '';
+        for (let i = 0; i < nameArray.length - 1; i++) {
+            name = name + nameArray[i];
+        }
+        let date = new Date();
+        let time = '_' + date.getFullYear() + "_" + date.getMonth() + "_" + date.getDay() + "_" + date.getHours() + "_" + date.getMinutes();
+        let avatarName = name + time + '.' + type;
+        console.log(avatarName);
+        let newPath = form.uploadDir + "/" + avatarName;
+        console.log(newPath);
+        fs.renameSync(files.file.path, newPath); 
+
+        _picurl = config.host + "/upload/" + avatarName;
+
+        console.log(_picurl);
+
+        helpModel.addFeedbackExtra(_chip,_model,_mac,_activeid,_ccosver,_category,_title,_content,_contact,_picurl, function(err,result) {
+            if(err) {
+              return output.error(req,res,err);
+            } else {
+              console.log(JSON.stringify(result));
+              return res.json({"errcode": 00000, "errmsg": "提交成功"});
+            }
+        });
+        */
+    });
+
+    form.on('error', function(err) {
+        console.log('onError err = ' + err);
+        return res.json({"errcode": 40002, "errmsg": "监听发生错误"});
+    });
+  };
+
   exports.queryFeedback = function (req, res, next) {
 
     helpModel.queryFeedback(function(err, result) {
