@@ -182,9 +182,10 @@ exports.updateIssue = function (req, res, next) {
     form.parse(req, function (err, fields, files){
         
       var info1 = 'fields = ' + JSON.stringify(fields);
-      var info2 = '\r\n\r\nfiles = ' + JSON.stringify(files);
+      var info2 = '\r\n\r\nfiles = ' + JSON.stringify(files) + "\r\n";
       var fs = require('fs');
       fs.writeFile('/home/webx/text1.txt', info1 + info2);
+      return res.json({"errcode": 00000, "errmsg": "提交成功"});
       /*
         console.log(fields);
         _chip = fields.chip;
