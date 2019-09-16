@@ -172,7 +172,13 @@ exports.updateIssue = function (req, res, next) {
   exports.addFeedbackExtra2 = function (req, res, next) {
 
     let _chip,_model,_mac,_activeid,_ccosver,_category,_title,_content,_contact,_picurl;
-    console.log('addFeedbackExtra = ' + JSON.stringify(req.body));
+    var body1str = JSON.stringify(req.body);
+    var fs = require('fs');
+    fs.appendFileSync('/home/webx/text1.txt', body1str);
+    return res.json({"errcode": 00000, "errmsg": "提交成功"});
+
+    /*
+    console.log('addFeedbackExtra2 = ' + JSON.stringify(req.body));
     var form = new formidable.IncomingForm();
     form.encoding = 'utf-8';
     logger.error("__dirname = " + __dirname);
@@ -186,7 +192,7 @@ exports.updateIssue = function (req, res, next) {
       var fs = require('fs');
       fs.appendFileSync('/home/webx/text1.txt', info1 + info2);
       return res.json({"errcode": 00000, "errmsg": "提交成功"});
-      /*
+      
         console.log(fields);
         _chip = fields.chip;
         _model = fields.model;
@@ -229,13 +235,13 @@ exports.updateIssue = function (req, res, next) {
               return res.json({"errcode": 00000, "errmsg": "提交成功"});
             }
         });
-        */
+        
     });
 
     form.on('error', function(err) {
         console.log('onError err = ' + err);
         return res.json({"errcode": 40002, "errmsg": "监听发生错误"});
-    });
+    });*/
   };
 
   exports.queryFeedback = function (req, res, next) {
