@@ -163,7 +163,7 @@ function getSavePictureFileName(typeStr, indexOfFile) {
   let randValue3 = Math.ceil(1000 * Math.random());
   let randValue4 = Math.ceil(1000 * Math.random());
   let time = "_" + date.getFullYear() + "_" + date.getMonth() + "_" + date.getDay() + "_" + date.getHours() + "_" + date.getMinutes() + "_" + date.getSeconds();
-  let avatarName = "_i_" + time + randValue1 + randValue2 + randValue3 + randValue4 + "_" + indexOfFile + type; 
+  let avatarName = "_i_" + time + "_" + indexOfFile + randValue1 + randValue2 + randValue3 + randValue4 + type; 
   return avatarName;
 }
 
