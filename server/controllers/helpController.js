@@ -172,10 +172,11 @@ exports.updateIssue = function (req, res, next) {
   exports.addFeedbackExtra2 = function (req, res, next) {
     
     //let _chip,_model,_mac,_activeid,_ccosver,_category,_title,_content,_contact,_picurl;
-    var body1str = req.body;
+    //var body1str = req.body;
+    console.log(req);
     //console.log('body1str = ' + body1str);
     //var fs = require('fs');
-    fs.appendFileSync('/home/webx/text1.txt', body1str);
+    //fs.appendFileSync('/home/webx/text1.txt', body1str);
     
     return res.json({"errcode": 00000, "errmsg": "提交成功"});
 
