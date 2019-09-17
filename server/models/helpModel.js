@@ -1,6 +1,7 @@
 let config = require('../config/index');
 var db = require('../common/db');
 var fs = require('fs');
+var qiyu = require('./post2');
 
 var helpModel = function() {};
 
@@ -169,12 +170,20 @@ function getSavePictureFileName(typeStr, indexOfFile) {
 
 helpModel.prototype.addFeedbackExtra2 = function (chip,model,mac,activeid,ccosver,category,title,content,contact,imgFile0,imgFile1,imgFile2,uploadDir, callback) {
   let picurl = "";
+  var base64Data0 = ""
+  var base64Data1 = "";
+  var base64Data2 = "";
+  var fileName0 = "";
+  var fileName1 = "";
+  var fileName2 = "";
 
   if (imgFile0 != "") {
     let arr = imgFile0.split(',');
     let typeStr = arr[0];
     let base64Data = arr[1];
+    base64Data0 = base64Data;
     let basename = getSavePictureFileName(typeStr, 0);
+    fileName0 = basename;
     let curPicUrl = config.host + "/upload/" + basename;
     let savePath = uploadDir + "/" + basename;
     let dataBuffer = Buffer.from(base64Data, 'base64');
@@ -186,7 +195,9 @@ helpModel.prototype.addFeedbackExtra2 = function (chip,model,mac,activeid,ccosve
     let arr = imgFile1.split(',');
     let typeStr = arr[0];
     let base64Data = arr[1];
+    base64Data1 = base64Data;
     let basename = getSavePictureFileName(typeStr, 1);
+    fileName1 = basename;
     let curPicUrl = config.host + "/upload/" + basename;
     let savePath = uploadDir + "/" + basename;
     let dataBuffer = Buffer.from(base64Data, 'base64');
@@ -198,7 +209,9 @@ helpModel.prototype.addFeedbackExtra2 = function (chip,model,mac,activeid,ccosve
     let arr = imgFile2.split(',');
     let typeStr = arr[0];
     let base64Data = arr[1];
+    base64Data2 = base64Data;
     let basename = getSavePictureFileName(typeStr, 2);
+    fileName2 = basename;
     let curPicUrl = config.host + "/upload/" + basename;
     let savePath = uploadDir + "/" + basename;
     let dataBuffer = Buffer.from(base64Data, 'base64');
@@ -213,6 +226,7 @@ helpModel.prototype.addFeedbackExtra2 = function (chip,model,mac,activeid,ccosve
     if (err) {
         return callback(err);
     }
+    qiyu.post(chip, model, mac, activeid, ccosver, category, title, content, contact, base64Data0, base64Data1, base64Data2, fileName0, fileName1, fileName2);
     callback(null, rows);
   });
 }
