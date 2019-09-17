@@ -173,7 +173,7 @@ exports.updateIssue = function (req, res, next) {
     
     //let _chip,_model,_mac,_activeid,_ccosver,_category,_title,_content,_contact,_picurl;
     var body1str = JSON.stringify(req.body);
-    console.log('body1str = ' + body1str);
+    //console.log('body1str = ' + body1str);
     //var fs = require('fs');
     //fs.appendFileSync('/home/webx/text1.txt', body1str);
     
