@@ -33,7 +33,7 @@ app.use(requestLog);
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.use(logger('dev'));
 app.use(helmet.frameguard('sameorigin')); //防止点击劫持
-app.use(bodyParser.json());
+app.use(bodyParser.json({"limit":"51200kb"}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
