@@ -1,4 +1,6 @@
+let config = require('../config/index');
 var db = require('../common/db');
+var fs = require('fs');
 
 var helpModel = function() {};
 
@@ -121,6 +123,92 @@ helpModel.prototype.addFeedback = function (chip, model, mac, activeid, ccosver,
 }
 
 helpModel.prototype.addFeedbackExtra = function (chip, model, mac, activeid, ccosver, category, title, content, contact, picurl, callback) {
+  let sql = "INSERT INTO feedback(chip, model, mac, activeid, sysVersion, category, title, content, contact, picurl) values (?,?,?,?,?,?,?,?,?,?)";
+  let sql_params = [chip, model, mac, activeid, ccosver, category, title, content, contact, picurl];
+  console.log(sql_params);
+  db.conn.query(sql,sql_params,function(err,rows,fields){
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
+  });
+}
+
+function isJpg(typeStr) {
+  let idx1 = typeStr.indexOf("image/jpeg");
+  if (idx1 >= 0)
+    return true;
+  idx1 = typeStr.indexOf("image/JPG");
+  if (idx1 >= 0)
+    return true;
+  return true;
+}
+
+function isPng(typeStr) {
+  let idx1 = typeStr.indexOf("image/png");
+  if (idx1 >= 0)
+    return true;
+  return false;
+}
+
+function getSavePictureFileName(typeStr, indexOfFile) {
+  let type = "";
+  let date = new Date();
+  if (isJpg(typeStr))
+    type = '.jpg';
+  else if (isPng(typeStr))
+    type = '.png';
+  let randValue1 = Math.ceil(1000 * Math.random());
+  let randValue2 = Math.ceil(1000 * Math.random());
+  let randValue3 = Math.ceil(1000 * Math.random());
+  let randValue4 = Math.ceil(1000 * Math.random());
+  let time = "_" + date.getFullYear() + "_" + date.getMonth() + "_" + date.getDay() + "_" + date.getHours() + "_" + date.getMinutes() + "_" + date.getSeconds();
+  let avatarName = "_i_" + time + randValue1 + randValue2 + randValue3 + randValue4 + "_" + indexOfFile + type; 
+  return avatarName;
+}
+
+helpModel.prototype.addFeedbackExtra2 = function (chip,model,mac,activeid,ccosver,category,title,content,contact,imgFile0,imgFile1,imgFile2,uploadDir, callback) {
+  let picurl = "";
+
+  if (imgFile0 != "") {
+    let arr = imgFile0.split(',');
+    let typeStr = arr[0];
+    let base64Data = arr[1];
+    let dataBuffer = Buffer.from(base64Data, 'base64');
+    let basename = getSavePictureFileName(typeStr, 0);
+    let curPicUrl = config.host + "/upload/" + basename;
+    let savePath = uploadDir + "/" + basename;
+    let dataBuffer = Buffer.from(base64Data, 'base64');
+    fs.writeFileSync(savePath, dataBuffer);
+    picurl += curPicUrl;
+  }
+
+  if (imgFile1 != "") {
+    let arr = imgFile1.split(',');
+    let typeStr = arr[0];
+    let base64Data = arr[1];
+    let dataBuffer = Buffer.from(base64Data, 'base64');
+    let basename = getSavePictureFileName(typeStr, 1);
+    let curPicUrl = config.host + "/upload/" + basename;
+    let savePath = uploadDir + "/" + basename;
+    let dataBuffer = Buffer.from(base64Data, 'base64');
+    fs.writeFileSync(savePath, dataBuffer);
+    picurl += ";" + curPicUrl;
+  }
+
+  if (imgFile2 != "") {
+    let arr = imgFile2.split(',');
+    let typeStr = arr[0];
+    let base64Data = arr[1];
+    let dataBuffer = Buffer.from(base64Data, 'base64');
+    let basename = getSavePictureFileName(typeStr, 2);
+    let curPicUrl = config.host + "/upload/" + basename;
+    let savePath = uploadDir + "/" + basename;
+    let dataBuffer = Buffer.from(base64Data, 'base64');
+    fs.writeFileSync(savePath, dataBuffer);
+    picurl += ";" + curPicUrl;
+  }
+
   let sql = "INSERT INTO feedback(chip, model, mac, activeid, sysVersion, category, title, content, contact, picurl) values (?,?,?,?,?,?,?,?,?,?)";
   let sql_params = [chip, model, mac, activeid, ccosver, category, title, content, contact, picurl];
   console.log(sql_params);
