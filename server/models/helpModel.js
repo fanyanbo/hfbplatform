@@ -141,7 +141,7 @@ function isJpg(typeStr) {
   idx1 = typeStr.indexOf("image/JPG");
   if (idx1 >= 0)
     return true;
-  return true;
+  return false;
 }
 
 function isPng(typeStr) {
