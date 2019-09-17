@@ -114,7 +114,7 @@ function createTicket(chip, model, mac, activeid, ccosver, category, title, cont
 	console.log('md5 = ' + contentMd5);
 	console.log('checksum = ' + checksum);
 	console.log('path = ' + urlpath);
-	console.log('dataStr = ' + dataStr);
+	//console.log('dataStr = ' + dataStr);
 	
 	const options = {
 		host: 'qiyukf.com',
