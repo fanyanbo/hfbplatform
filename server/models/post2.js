@@ -23,6 +23,8 @@ var AppSecret = "BD46D278B72048DE81E3F22A4B113E8D";
 function QiYuPost(){}
 
 QiYuPost.prototype.post = function(chip, model, mac, activeid, ccosver, category, title, content, contact, file0base64, file1base64, file2base64, fileName0, fileName1, fileName2) {
+	if (contact == "" || contact == null || contact == undefined)	// 如果联系方式是空的话，不提交工单
+		return;
 	createTicket(chip, model, mac, activeid, ccosver, category, title, content, contact, file0base64, file1base64, file2base64, fileName0, fileName1, fileName2);
 }
 
