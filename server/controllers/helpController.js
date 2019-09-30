@@ -171,6 +171,8 @@ exports.updateIssue = function (req, res, next) {
 
   exports.addFeedbackExtra2 = function (req, res, next) {
     
+	console.log('addFeedbackExtra2()');
+	
     let chip = validator.trim(req.body.chip);
     let model = validator.trim(req.body.model);
     let mac = validator.trim(req.body.mac);
