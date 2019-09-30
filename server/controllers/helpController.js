@@ -87,15 +87,17 @@ exports.updateIssue = function (req, res, next) {
   exports.addFeedback = function (req, res, next) {
 
     console.log('addFeedback = ' + JSON.stringify(req.body));
+	
     let chip = validator.trim(req.body.chip);
     let model = validator.trim(req.body.model);
     let mac = validator.trim(req.body.mac);
     let activeid = validator.trim(req.body.activeid);
-    let ccosver = validator.trim(req.body.ccosver);
+    let ccosver = "";//validator.trim(req.body.ccosver);
     let category = validator.trim(req.body.category);
     let title = validator.trim(req.body.title);
     let content = validator.trim(req.body.content);
     let contact = validator.trim(req.body.contact);
+	
     
     helpModel.addFeedback(chip,model,mac,activeid,ccosver,category,title,content,contact,function(err, result) {
         if(err) {
