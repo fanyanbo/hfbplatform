@@ -85,19 +85,43 @@ exports.updateIssue = function (req, res, next) {
 };
 
   exports.addFeedback = function (req, res, next) {
-
+	  
     console.log('addFeedback = ' + JSON.stringify(req.body));
 	
-    let chip = validator.trim(req.body.chip);
-    let model = validator.trim(req.body.model);
-    let mac = validator.trim(req.body.mac);
-    let activeid = validator.trim(req.body.activeid);
-    let ccosver = "";//validator.trim(req.body.ccosver);
-    let category = validator.trim(req.body.category);
-    let title = validator.trim(req.body.title);
-    let content = validator.trim(req.body.content);
-    let contact = validator.trim(req.body.contact);
+	let chip, model, mac, activeid, ccosver, category, title, content, contact;
 	
+	try {
+		chip = validator.trim(req.body.chip);
+		model = validator.trim(req.body.model);
+		mac = validator.trim(req.body.mac);
+		activeid = validator.trim(req.body.activeid);
+		category = validator.trim(req.body.category);
+		title = validator.trim(req.body.title);
+		content = validator.trim(req.body.content);
+		contact = validator.trim(req.body.contact);
+		ccosver = validator.trim(req.body.ccosver);
+	}
+	catch(err) {
+		console.log('addFeedback err = ' + err);
+		if (chip == null || chip == undefined)
+			chip = "";
+		if (model == null || model == undefined)
+			model = "";
+		if (mac == null || mac == undefined)
+			mac = "";
+		if (activeid == null || activeid == undefined)
+			activeid = "";
+		if (ccosver == null || ccosver == undefined)
+			ccosver = "";
+		if (category == null || category == undefined)
+			category = "";
+		if (title == null || title == undefined)
+			title = "";
+		if (content == null || content == undefined)
+			content = "";
+		if (contact == null || contact == undefined)
+			contact = "";
+	}
     
     helpModel.addFeedback(chip,model,mac,activeid,ccosver,category,title,content,contact,function(err, result) {
         if(err) {
