@@ -36,7 +36,7 @@ function createTicket(chip, model, mac, activeid, ccosver, category, title, cont
 		"content": content,
 		"staffId": "3871590",
 		"userMobile": contact,
-		"targetStaffId": "3871590",
+		"targetGroupId": "397886066",
 		"templateId":"3134692",
 		"customFields" : [
 			{
