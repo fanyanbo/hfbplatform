@@ -413,3 +413,19 @@ exports.updateIssue = function (req, res, next) {
     }
   }
 
+  exports.hello1 = function (req, res, next) {
+    var h5text = '';
+    h5text += '<html>\n';
+    h5text += '<head>\n';
+    h5text += '</head>\n';
+    h5text += '<body>\n';
+    h5text += '<h1>Hello World !</h1>\n';
+    h5text += '</body>\n';
+    h5text += '</html>\n';
+    res.type('html');
+    res.set('Content-Type', 'text/html');
+    res.send(h5text);
+  }
+
+
+
