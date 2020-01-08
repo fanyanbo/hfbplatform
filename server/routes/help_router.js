@@ -36,6 +36,6 @@ router.post('/updateIssue',helpController.updateIssue);
 router.post('/queryIssue',helpController.queryIssue);
 router.post('/login',helpController.login);
 router.post('/checkLogin',helpController.checkLogin);
-router.post('/hello1',helpController.hello1);
+router.get('/hello1',helpController.hello1);
 
 module.exports = router;
