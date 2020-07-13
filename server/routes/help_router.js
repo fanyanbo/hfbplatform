@@ -37,5 +37,6 @@ router.post('/queryIssue',helpController.queryIssue);
 router.post('/login',helpController.login);
 router.post('/checkLogin',helpController.checkLogin);
 router.get('/hello1',helpController.hello1);
+router.get('/sse', helpController.sse);
 
 module.exports = router;

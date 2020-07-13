@@ -7,6 +7,8 @@ let formidable = require('formidable');
 let config = require('../config/index');
 var logger = require('../common/logger');
 
+const SseStream = require('ssestream2')
+
 exports.queryDiscovery = function (req, res, next) {
 
     helpModel.queryDiscovery(function(err, result) {
@@ -85,43 +87,43 @@ exports.updateIssue = function (req, res, next) {
 };
 
   exports.addFeedback = function (req, res, next) {
-	  
+    
     console.log('addFeedback = ' + JSON.stringify(req.body));
-	
-	let chip, model, mac, activeid, ccosver, category, title, content, contact;
-	
-	try {
-		chip = validator.trim(req.body.chip);
-		model = validator.trim(req.body.model);
-		mac = validator.trim(req.body.mac);
-		activeid = validator.trim(req.body.activeid);
-		category = validator.trim(req.body.category);
-		title = validator.trim(req.body.title);
-		content = validator.trim(req.body.content);
-		contact = validator.trim(req.body.contact);
-		ccosver = validator.trim(req.body.ccosver);
-	}
-	catch(err) {
-		console.log('addFeedback err = ' + err);
-		if (chip == null || chip == undefined)
-			chip = "";
-		if (model == null || model == undefined)
-			model = "";
-		if (mac == null || mac == undefined)
-			mac = "";
-		if (activeid == null || activeid == undefined)
-			activeid = "";
-		if (ccosver == null || ccosver == undefined)
-			ccosver = "";
-		if (category == null || category == undefined)
-			category = "";
-		if (title == null || title == undefined)
-			title = "";
-		if (content == null || content == undefined)
-			content = "";
-		if (contact == null || contact == undefined)
-			contact = "";
-	}
+  
+  let chip, model, mac, activeid, ccosver, category, title, content, contact;
+  
+  try {
+    chip = validator.trim(req.body.chip);
+    model = validator.trim(req.body.model);
+    mac = validator.trim(req.body.mac);
+    activeid = validator.trim(req.body.activeid);
+    category = validator.trim(req.body.category);
+    title = validator.trim(req.body.title);
+    content = validator.trim(req.body.content);
+    contact = validator.trim(req.body.contact);
+    ccosver = validator.trim(req.body.ccosver);
+  }
+  catch(err) {
+    console.log('addFeedback err = ' + err);
+    if (chip == null || chip == undefined)
+      chip = "";
+    if (model == null || model == undefined)
+      model = "";
+    if (mac == null || mac == undefined)
+      mac = "";
+    if (activeid == null || activeid == undefined)
+      activeid = "";
+    if (ccosver == null || ccosver == undefined)
+      ccosver = "";
+    if (category == null || category == undefined)
+      category = "";
+    if (title == null || title == undefined)
+      title = "";
+    if (content == null || content == undefined)
+      content = "";
+    if (contact == null || contact == undefined)
+      contact = "";
+  }
     
     helpModel.addFeedback(chip,model,mac,activeid,ccosver,category,title,content,contact,function(err, result) {
         if(err) {
@@ -197,8 +199,8 @@ exports.updateIssue = function (req, res, next) {
 
   exports.addFeedbackExtra2 = function (req, res, next) {
     
-	console.log('addFeedbackExtra2()');
-	
+  console.log('addFeedbackExtra2()');
+  
     let chip = validator.trim(req.body.chip);
     let model = validator.trim(req.body.model);
     let mac = validator.trim(req.body.mac);
@@ -426,6 +428,26 @@ exports.updateIssue = function (req, res, next) {
     res.set('Content-Type', 'text/html');
     res.send(h5text);
   }
+  
+  exports.sse = function (req, res, next) {
+    console.log('new connection')
+
+    const sseStream = new SseStream(req)
+    sseStream.pipe(res)
+    const pusher = setInterval(() => {
+        seStream.write({
+          event: 'server-time',
+          data: new Date().toTimeString()
+        })
+      }, 1000)
+
+    res.on('close', () => {
+      console.log('lost connection')
+      clearInterval(pusher)
+      sseStream.unpipe(res)
+    })
+  }
+
 
 
 
