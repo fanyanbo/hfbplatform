@@ -421,7 +421,7 @@ exports.updateIssue = function (req, res, next) {
     h5text += '<head>\n';
     h5text += '</head>\n';
     h5text += '<body>\n';
-    h5text += '<h1 style="color: #FFFFFF">Hello World !</h1>\n';
+    h5text += '<h1 style="color: #000000">Hello World !</h1>\n';
     h5text += '</body>\n';
     h5text += '</html>\n';
     res.type('html');
