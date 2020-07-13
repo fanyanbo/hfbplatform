@@ -428,10 +428,10 @@ exports.updateIssue = function (req, res, next) {
     res.set('Content-Type', 'text/html');
     res.send(h5text);
   }
-  
+  /*
   exports.sse = function (req, res, next) {
     console.log('new connection')
-/*
+
     const sseStream = new SseStream(req)
     sseStream.pipe(res)
     const pusher = setInterval(() => {
@@ -445,9 +445,9 @@ exports.updateIssue = function (req, res, next) {
       console.log('lost connection')
       clearInterval(pusher)
       sseStream.unpipe(res)
-    })*/
+    })
   }
-
+*/
 
 
 
