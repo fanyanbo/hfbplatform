@@ -7,7 +7,7 @@ let formidable = require('formidable');
 let config = require('../config/index');
 var logger = require('../common/logger');
 
-const SseStream = require('ssestream2')
+//const SseStream = require('ssestream2')
 
 exports.queryDiscovery = function (req, res, next) {
 
@@ -431,7 +431,7 @@ exports.updateIssue = function (req, res, next) {
   
   exports.sse = function (req, res, next) {
     console.log('new connection')
-
+/*
     const sseStream = new SseStream(req)
     sseStream.pipe(res)
     const pusher = setInterval(() => {
@@ -445,7 +445,7 @@ exports.updateIssue = function (req, res, next) {
       console.log('lost connection')
       clearInterval(pusher)
       sseStream.unpipe(res)
-    })
+    })*/
   }
 
 
