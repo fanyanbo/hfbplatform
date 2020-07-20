@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, './public')));
 //   next();
 // });
 app.use(cors({
-    origin:['https://webx.coocaa.com','https://beta.webapp.skysrt.com','http://beta.webapp.skysrt.com','https://webapp.skysrt.com','http://localhost:8080','http://localhost:8081'],
+    origin:['https://webx.coocaa.com','https://beta-webapp.skysrt.com','http://beta.webapp.skysrt.com','https://webapp.skysrt.com','http://localhost:8080','http://localhost:8081'],
     // origin:['http://172.20.133.47:8080'],
     methods:['GET','POST'],
     alloweHeaders:['Conten-Type','Authorization','Content-Length', 'Accept,X-Requested-With'],
